@@ -19,6 +19,17 @@ class ResetPassword extends Component
         'password' => 'required|min:8|same:passwordConfirmation',
     ];
 
+    public function messages(): array
+    {
+        return [
+
+            'email.required' => 'El correo es requerido',
+            'password.required' => 'La contraseña es requerida',
+            'min'=> 'La contraseña debe tener al menos 8 caracteres.',
+            'same' => 'La contraseña y la confirmación de contraseña deben coincidir.'
+        ];
+    }
+
     public function render()
     {
         return view('livewire.auth.reset-password');
@@ -39,9 +50,9 @@ class ResetPassword extends Component
             $existingUser->update([
                 'password' => $this->password
             ]);
-            redirect('sign-in')->with('status', 'Your password has been reset!');
+            redirect('sign-in')->with('status', '¡Tu contraseña ha sido restablecida!');
         } else {
-            return back()->with('email', "We can't find any user with that email address.");
+            return back()->with('email', "No podemos encontrar ningún usuario con esa dirección de correo electrónico.");
         }
     
     }

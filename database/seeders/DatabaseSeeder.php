@@ -14,10 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@guiseo.com',
-            'password' => ('secret')
-        ]);
+        $this->call(UserSeeder::class);
+        
     }
 }

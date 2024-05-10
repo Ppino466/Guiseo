@@ -42,17 +42,20 @@ class ResetPassword extends Notification
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
 
-    public function toMail($notifiable)
-    {
-        $url = URL::temporarySignedRoute('reset-password', now()->addHours(12) ,['id' => $this->token]);
-        return (new MailMessage)
-                    ->line('Hi!')
-                    ->subject('Reset Password')
-                    ->line('You are receveing this email so you can reset the password for your account')
-                    ->action('Reset Password', $url )
-                    ->line("If you didn't request this, please ignore this email.")
-                    ->line('Thank you!');
-    }
+     public function toMail($notifiable)
+     {
+         // Genera una URL con firma temporal válida por 12 horas.
+         $url = URL::temporarySignedRoute('reset-password', now()->addHours(12), ['id' => $this->token]);
+     
+         return (new MailMessage)
+                     ->line('¡Hola!')
+                     ->subject('Restablecer Contraseña')
+                     ->line('Estás recibiendo este correo electrónico para poder restablecer la contraseña de tu cuenta.')
+                     ->action('Restablecer Contraseña', $url)
+                     ->line('Si no solicitaste esto, por favor ignora este correo electrónico.')
+                     ->line('¡Gracias!');
+     }
+     
 
     /**
      * Get the array representation of the notification.

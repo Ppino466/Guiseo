@@ -29,11 +29,7 @@ class ForgotPassword extends Component
 
     public function show(){
 
-        if(env('IS_DEMO')){
-            return back()->with('demo', "You are in a demo version, you can't reset the password");
-        }
-        else{
-
+     
         $this->validate();
 
         $user = User::where('email', $this->email)->first();
@@ -44,14 +40,13 @@ class ForgotPassword extends Component
     
             $this->notify(new ResetPassword($user->id));
 
-            return back()->with('status', "We have emailed your password reset link!");
+            return back()->with('status', "¡Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!");
 
     
         } else {
     
-            return back()->with('email', "We can't find any user with that email address.");
+            return back()->with('email', "No podemos encontrar ningún usuario con esa dirección de correo electrónico.");
     
-        }
     }
 }
 }

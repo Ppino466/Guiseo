@@ -19,8 +19,20 @@ class UserSeeder extends Seeder
             'email' => 'biohazardm3@gmail.com',
             'phone' => '(+52) 333-333-3333',
             'location' => 'gdl',
-            'about' => 'text long example',
+            'about' => 'admin',
             'status' => 1,
+            'password' => ('123456789'),
+            'created_at' => now()
+        ]);
+
+        User::create([   
+            'name' => 'Juan',
+            'last_name' => 'Ruiz',
+            'email' => 'kiran82@gmail.com',
+            'phone' => '(+52) 323-333-3333',
+            'location' => 'gdl',
+            'about' => 'empleado',
+            'status' => 0,
             'password' => ('123456789'),
             'created_at' => now()
         ]);

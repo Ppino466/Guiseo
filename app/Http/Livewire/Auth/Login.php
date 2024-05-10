@@ -45,17 +45,33 @@ class Login extends Component
 
     public function store()
     {
-        $attributes = $this->validate();
+        // Validar los campos del formulario
+        $attributes = $this->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (! auth()->attempt($attributes)) {
+
+        if (!auth()->attempt($attributes)) {
             throw ValidationException::withMessages([
-                'email' => 'Your provided credentials could not be verified.'
+                'email' => 'No se pudieron verificar las credenciales proporcionadas.'
             ]);
         }
 
+        // Obtener al usuario autenticado
+        $user = auth()->user();
+
+        // Verificar el estado del usuario
+        if (!$user->status) {
+            throw ValidationException::withMessages([
+                'email' => 'Su cuenta está inactiva. Comuníquese con el soporte para obtener ayuda.'
+            ]);
+        }
+
+        // Regenerar la sesión
         session()->regenerate();
 
+        // Redireccionar al dashboard
         return redirect('/dashboard');
-
     }
 }

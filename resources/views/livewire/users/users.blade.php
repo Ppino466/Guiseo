@@ -16,7 +16,7 @@
                             <button type="button" class="btn btn-secondary"
                                 wire:click="$emit('modalOpen')">Registrar</button>
                         </div>
-                        <livewire:user-table theme="bootstrap-5" />
+                        <livewire:user.user-table theme="bootstrap-5" />
                     </div>
                 </div>
             </div>
@@ -28,10 +28,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     @if ($user)
-                    <h5 class="modal-title font-weight-normal" id="userModalLabel">Editar usuario</h5>    
+                        <h5 class="modal-title font-weight-normal" id="userModalLabel">Editar usuario</h5>
                     @else
-                    <h5 class="modal-title font-weight-normal" id="userModalLabel">Registrar usuario</h5>
-                    @endif      
+                        <h5 class="modal-title font-weight-normal" id="userModalLabel">Registrar usuario</h5>
+                    @endif
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -61,17 +61,17 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     @if ($user)
-                    <button type="button" class="btn btn-success" wire:click="updateUser" wire:loading.attr="disabled"
-                        wire:target="updateUser">Guardar</button>
-                    <div wire:loading wire:target="updateUser">
-                        Procesando...
-                    </div>    
+                        <button type="button" class="btn btn-success" wire:click="updateUser"
+                            wire:loading.attr="disabled" wire:target="updateUser">Guardar</button>
+                        <div wire:loading wire:target="updateUser">
+                            Procesando...
+                        </div>
                     @else
-                    <button type="button" class="btn btn-success" wire:click="saveUser" wire:loading.attr="disabled"
-                        wire:target="saveUser">Guardar</button>
-                    <div wire:loading wire:target="saveUser">
-                        Procesando...
-                    </div>    
+                        <button type="button" class="btn btn-success" wire:click="saveUser"
+                            wire:loading.attr="disabled" wire:target="saveUser">Guardar</button>
+                        <div wire:loading wire:target="saveUser">
+                            Procesando...
+                        </div>
                     @endif
                 </div>
             </div>
@@ -81,7 +81,6 @@
 </div>
 @push('js')
     <script>
-
         let mask;
 
         $(document).ready(function() {
@@ -105,17 +104,17 @@
 
             Livewire.on('listenerBaja', function(value) {
                 mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!", () => {
-                    Livewire.emit('downUser',value);
+                    Livewire.emit('downUser', value);
                     mostrarAlerta("¡Realizado!", "El usuario se ha dado de baja.", "success");
                 });
             });
 
             Livewire.on('listenerAlta', function(value) {
                 mostrarConfirmacion("¿Estás seguro?", "Esto reactivará el acceso del usuario al sistema.",
-                () => {
-                    Livewire.emit('upUser',value);
-                    mostrarAlerta("¡Realizado!", "El usuario ha sido dado de alta.", "success");
-                });
+                    () => {
+                        Livewire.emit('upUser', value);
+                        mostrarAlerta("¡Realizado!", "El usuario ha sido dado de alta.", "success");
+                    });
             });
 
             // Hook de Livewire para actualizar la máscara después del procesamiento del mensaje

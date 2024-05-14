@@ -40,8 +40,8 @@
                             @endif
                             <form wire:submit.prevent="show">
                                 
-                                <div class="input-group input-group-outline mt-3 @if(strlen($email ?? '') > 0) is-filled @endif">
-                                    <label class="form-label">Correo</label>
+                                <div class="input-group input-group-static mt-3 @if(strlen($email ?? '') > 0) is-filled @endif">
+                                    <label>Correo</label>
                                     <input wire:model="email" type="email" class="form-control"
                                         >
                                 </div>

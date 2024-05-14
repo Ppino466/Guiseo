@@ -20,8 +20,8 @@
                             </div>
                         @endif
                         <div
-                            class="input-group input-group-outline mt-3 @if (strlen($email ?? '') > 0) is-filled @endif">
-                            <label class="form-label">Correo</label>
+                            class="input-group input-group-static mt-3 @if (strlen($email ?? '') > 0) is-filled @endif">
+                            <label >Correo</label>
                             <input wire:model='email' type="email" class="form-control">
                         </div>
                         @error('email')
@@ -29,26 +29,27 @@
                         @enderror
 
                         <div
-                            class="input-group input-group-outline mt-3 @if (strlen($password ?? '') > 0) is-filled @endif">
-                            <label class="form-label">Contraseña</label>
+                            class="input-group input-group-static mt-3 @if (strlen($password ?? '') > 0) is-filled @endif">
+                            <label >Contraseña</label>
                             <input wire:model="password" type="password" class="form-control">
                         </div>
                         @error('password')
                             <p class='text-danger inputerror'>{{ $message }} </p>
                         @enderror
-                        <div class="form-check form-switch d-flex align-items-center my-3">
+                        {{-- <div class="form-check form-switch d-flex align-items-center my-3">
                             <input class="form-check-input" type="checkbox" id="rememberMe" wire:model="remember">
                             <label class="form-check-label mb-0 ms-2" for="rememberMe">Recordarme
                             </label>
-                        </div>
+                        </div> --}}
                         <div class="text-center">
                             <button type="submit" class="btn bg-gradient-info w-100 my-4 mb-2">Ingreso</button>
-                        </div>
+                        
                         <p class="text-sm text-center">
                             ¿Olvidaste tu contraseña? Restablecer su contraseña
                             <a href="{{ route('password.forgot') }}"
                                 class="text-info text-gradient font-weight-bold">Aqui</a>
                         </p>
+                    </div>
                     </form>
                 </div>
             </div>

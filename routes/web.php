@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
+use App\Http\Livewire\Log;
+use App\Http\Livewire\Log\Log as LogView;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\RTL;
@@ -18,6 +20,7 @@ use App\Http\Livewire\Tables;
 use App\Http\Livewire\User\Users;
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\VirtualReality;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas users
     Route::get('users', Users::class)->name('usuarios');
     Route::get('user/{id}',UserView::class)->name('usuario');
+
+    //Rutas Activity log 
+    Route::get('log',LogView::class)->name('activity log');
 
 
     //Rutas Example

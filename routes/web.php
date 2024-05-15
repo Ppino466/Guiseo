@@ -16,6 +16,7 @@ use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\User\Users;
+use App\Http\Livewire\Product\Products;
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\VirtualReality;
 
@@ -54,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users', Users::class)->name('usuarios');
     Route::get('user/{id}',UserView::class)->name('usuario');
 
+    //Ruta productos
+    Route::get('products', Products::class)->name('products');
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

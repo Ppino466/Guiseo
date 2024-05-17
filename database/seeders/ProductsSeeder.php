@@ -15,39 +15,44 @@ class ProductsSeeder extends Seeder
     {
         $products = [
             [
-                'sku' => 'SKU001',
                 'name' => 'Product 1',
+                'description' => 'Descripción 1',
                 'price' => 10.99,
-                'stock' => 100,
+                'supplier_id' => 1,
                 'category_id' => 1,
+                'sku' => 'SKU001'
             ],
             [
-                'sku' => 'SKU002',
                 'name' => 'Product 2',
-                'price' => 19.99,
-                'stock' => 50,
+                'description' => 'Descripción 2',
+                'price' => 10.99,
+                'supplier_id' => 1,
                 'category_id' => 2,
+                'sku' => 'SKU002'
             ],
             [
-                'sku' => 'SKU003',
                 'name' => 'Product 3',
-                'price' => 5.99,
-                'stock' => 200,
-                'category_id' => 3,
-            ],
-            [
-                'sku' => 'SKU004',
-                'name' => 'Product 4',
-                'price' => 15.50,
-                'stock' => 75,
-                'category_id' => 1,
-            ],
-            [
-                'sku' => 'SKU005',
-                'name' => 'Product 5',
-                'price' => 8.75,
-                'stock' => 120,
+                'description' => 'Descripción 3',
+                'price' => 10.99,
+                'supplier_id' => 1,
                 'category_id' => 2,
+                'sku' => 'SKU003'
+            ],
+            [
+                'name' => 'Product 4',
+                'description' => 'Descripción 4',
+                'price' => 10.99,
+                'supplier_id' => 1,
+                'category_id' => 2,
+                'sku' => 'SKU004'
+            ],
+            [
+                'name' => 'Product 5',
+                'description' => 'Descripción 4',
+                'price' => 10.99,
+                'supplier_id' => 1,
+                'category_id' => 2,
+                'sku' => 'SKU005'
             ],
         ];
 

@@ -14,11 +14,14 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'sku', 
-        'name', 
-        'price', 
-        'stock', 
-        'category_id'
+        'name',
+        'description', 
+        'price',
+        'supplier_id', 
+        'category_id',
+        'sku',
+        'image' 
+        
     ];
 
     public function getActivitylogOptions(): LogOptions

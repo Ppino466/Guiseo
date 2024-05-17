@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('category_id');
             $table->string('sku')->unique();
-            $table->string('image');
+            $table->string('image')->default('n/a');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('supplier_id')->references('id')->on('suppliers');

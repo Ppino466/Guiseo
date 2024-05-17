@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas Activity log
     Route::get('log',LogView::class)->name('activity log');
 
+    //Ruta Products
     Route::get('products', Product::class)->name('products');
 
     //Rutas Example

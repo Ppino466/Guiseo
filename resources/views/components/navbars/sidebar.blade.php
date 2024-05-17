@@ -18,9 +18,9 @@
             <?php
             $items = [
                 ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'],
-                ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history'],
                 ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'],
-                
+                ['title' => 'Ventas', 'route' => 'venta', 'icon' => 'point_of_sale'],
+                ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
             ];
             ?>
 

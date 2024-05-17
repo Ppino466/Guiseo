@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
+use App\Http\Livewire\Log;
+use App\Http\Livewire\Log\Log as LogView;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\RTL;
@@ -16,9 +18,10 @@ use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\User\Users;
-use App\Http\Livewire\Product\Products;
+use App\Http\Livewire\Product\Product;
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\VirtualReality;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -48,15 +51,17 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
 
-    //Ruta dashboard 
+    //Ruta dashboard
     Route::get('dashboard', Dashboard::class)->name('dashboard');
 
     //Rutas users
     Route::get('users', Users::class)->name('usuarios');
     Route::get('user/{id}',UserView::class)->name('usuario');
 
-    //Ruta productos
-    Route::get('products', Products::class)->name('products');
+    //Rutas Activity log
+    Route::get('log',LogView::class)->name('activity log');
+
+    Route::get('products', Product::class)->name('products');
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

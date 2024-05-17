@@ -12,7 +12,7 @@
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-        
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Paginas</h6>
             </li>
@@ -35,14 +35,25 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ Route::currentRouteName() == 'usuarios' ? ' active bg-gradient-info' : '' }} "
-                    href="{{ route('usuarios') }}">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'products' ? ' active bg-gradient-info' : '' }} "
+                    href="{{ route('products') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">people_alt</i>
                     </div>
-                    <span class="nav-link-text ms-1">Usuarios</span>
+                    <span class="nav-link-text ms-1">Productos</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ Route::currentRouteName() == 'activity log' ? ' active bg-gradient-info' : '' }} "
+                    href="{{ route('activity log') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">history</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Logs</span>
+                </a>
+            </li>
+
+
         </ul>
     </div>
     {{-- Botones footer aside --}}
@@ -57,5 +68,5 @@
             </div>
         </a>
     </div>
-    
+
 </aside>

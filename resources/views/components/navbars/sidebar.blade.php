@@ -19,7 +19,8 @@
             $items = [
                 ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'],
                 ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'],
-                ['title' => 'Ventas', 'route' => 'venta', 'icon' => 'point_of_sale'],
+                ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'],
+                ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'],
                 ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
             ];
             ?>

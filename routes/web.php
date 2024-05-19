@@ -14,6 +14,7 @@ use App\Http\Livewire\Log\Log as LogView;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\RTL;
+use App\Http\Livewire\Sale\ListSales;
 use App\Http\Livewire\Sale\Sales;
 use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
@@ -63,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Ventas
     Route::get('venta',Sales::class)->name('venta');
+    Route::get('ventas',ListSales::class)->name('lista-ventas');
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

@@ -24,6 +24,9 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @error('name')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-control my-3">
@@ -36,7 +39,7 @@
                                     <div class="form-control my-3">
                                         <label class="form-label">Precio</label>
                                         <input type="text" class="form-control" id="price" disabled
-                                            wire:model="price">
+                                            wire:model="unitPrice">
                                     </div>
                                 </div>
                             </div>
@@ -47,12 +50,23 @@
                                         <input type="text" class="form-control" id="quantity"
                                             wire:model.defer="quantity">
                                     </div>
+                                    @error('quantity')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="form-control my-3">
+
+                                        <button wire:click.prevent="addDetail()" class="btn btn-success"><i
+                                                class="material-icons opacity-10">add</i></button>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-control my-3">
                                         <label class="form-label">Total</label>
                                         <input type="text" class="form-control" id="total" disabled
-                                            wire:model="total">
+                                            wire:model="totalPrice">
                                     </div>
                                 </div>
                             </div>
@@ -62,12 +76,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <button type="button" class="btn btn-success w-100 my-3"
-                                        onclick="confirmSale()">Confirmar Venta</button>
+                                        wire:click.prevent="completedSale()">Confirmar Venta</button>
                                 </div>
                                 <div class="col-md-6">
+                                
                                     <button type="button" class="btn btn-danger w-100 my-3"
-                                        onclick="cancelSale()">Cancelar</button>
-                                </div>
+                                        wire:click="rejectSale()">Cancelar</button>
+                                    </div>
                             </div>
                         </form>
                     </div>
@@ -150,7 +165,50 @@
                     totalMask.updateValue();
                 }
             });
+            Livewire.on('saleNotFound', function() {
+                Swal.fire({
+                    title: "Error",
+                    text: "No hay venta activa.",
+                    icon: "error",
+                    confirmButtonText: 'Cerrar'
+                });
+            });
+
+
+            Livewire.on('listenerBorrar', function(value) {
+                mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!", () => {
+                    Livewire.emit('downSale', value);
+                    mostrarAlerta("¡Realizado!", "La venta a sido cancelada.", "success");
+                });
+            });
+
+            // Función para mostrar una confirmación de SweetAlert2
+            function mostrarConfirmacion(titulo, mensaje, callback) {
+                Swal.fire({
+                    title: titulo,
+                    text: mensaje,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, continuar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        callback();
+                    }
+                });
+            }
+
+            // Función para mostrar una alerta de SweetAlert2
+            function mostrarAlerta(titulo, mensaje, icono) {
+                Swal.fire({
+                    title: titulo,
+                    text: mensaje,
+                    icon: icono,
+                    confirmButtonText: 'Ok'
+                });
+            }
+
         });
-        
     </script>
 @endpush

@@ -27,4 +27,17 @@ class SaleDetail extends Model
         ->logOnly(['*']);
        
     }
+
+    public function sale()
+    {
+        return $this->belongsTo(Sale::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+        
+    }
+
+
 }

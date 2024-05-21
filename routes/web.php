@@ -20,6 +20,7 @@ use App\Http\Livewire\StaticSignIn;
 use App\Http\Livewire\StaticSignUp;
 use App\Http\Livewire\Tables;
 use App\Http\Livewire\User\Users;
+use App\Http\Livewire\Product\Product;
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\VirtualReality;
 
@@ -52,19 +53,21 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
 
-    //Ruta dashboard 
+    //Ruta dashboard
     Route::get('dashboard', Dashboard::class)->name('dashboard');
 
     //Rutas users
     Route::get('users', Users::class)->name('usuarios');
     Route::get('user/{id}',UserView::class)->name('usuario');
 
-    //Rutas Activity log 
+    //Rutas Activity log
     Route::get('log',LogView::class)->name('activity log');
 
     //Rutas Ventas
     Route::get('venta',Sales::class)->name('venta');
     Route::get('ventas',ListSales::class)->name('lista-ventas');
+    //Ruta Products
+    Route::get('products', Product::class)->name('products');
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

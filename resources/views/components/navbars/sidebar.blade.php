@@ -19,9 +19,11 @@
             $items = [
                 ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'],
                 ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'],
+                ['title' => 'Products', 'route' => 'products', 'icon' => 'category'],
                 ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'],
                 ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'],
-                ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
+                ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history'],
+                ['title' => 'Products', 'route' => 'products', 'icon' => 'category'],
             ];
             ?>
 
@@ -35,7 +37,7 @@
                         <span class="nav-link-text ms-1">{{ $item['title'] }}</span>
                     </a>
                 </li>
-            @endforeach
+        @endforeach
         </ul>
     </div>
 
@@ -51,4 +53,5 @@
             </div>
         </a>
     </div>
+
 </aside>

@@ -91,7 +91,7 @@ class SalesTable extends DataTableComponent
                 }),
                 Column::make('Detalle', 'id')->format(function ($value, $row, Column $column) {
                     // Asegúrate de que $row contiene el campo 'id' o ajusta según tu estructura de datos.
-                    $boton = '<button type="button" wire:click="$emitUp(\'showDetail\', ' . $value . ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    $boton = '<button type="button" wire:click="$emit(\'modalOpen\', ' . $value . ')" class="btn btn-info">
                                 <i class="material-icons opacity-10">list_alt</i>
                               </button>';
                 

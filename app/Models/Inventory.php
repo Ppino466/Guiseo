@@ -7,22 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Product extends Model
+class Inventory extends Model
 {
     use LogsActivity;
 
-    protected $table = 'products';
+    protected $table = 'inventory';
 
-    protected $fillable = [
-        'name',
-        'description', 
-        'price',
-        'supplier_id', 
-        'category_id',
-        'sku',
-        'image' 
-        
-    ];
+    use HasFactory;
+
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -31,8 +23,8 @@ class Product extends Model
        
     }
 
-    public function inventory()
+    public function product()
     {
-        return $this->hasOne(Inventory::class);
+        return $this->belongsTo(Product::class);
     }
 }

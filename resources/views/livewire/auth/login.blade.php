@@ -1,9 +1,9 @@
 <div class="container my-auto mt-5">
     <div class="row signin-margin">
         <div class="col-lg-4 col-md-8 col-12 mx-auto">
-            <div class="card z-index-0 fadeIn3 fadeInBottom">
+            <div class="card ">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
+                    <div class="bg-gradient-info shadow-info  py-3 pe-1" style="border-radius: 10px">
                         <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Iniciar Sesión</h4>
 
                     </div>

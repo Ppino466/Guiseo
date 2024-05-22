@@ -34,7 +34,9 @@ class Sales extends Component
     public function mount()
     {
         $this->selectedProduct = null;
-        $this->listProducts = Product::all();
+        $this->listProducts = Product::whereHas('inventory', function($query) {
+            $query->where('quantity', '>', 0);
+        })->get();
     }
 
     public function searchProduct($selectedValue)

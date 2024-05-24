@@ -19,11 +19,6 @@ class ListSales extends Component
 
     public $totalSale;
 
-    public function render()
-    {
-        return view('livewire.sale.list-sales');
-    }
-
     public function showDetail($id)
     {
         $this->data = SaleDetail::with('product')
@@ -42,5 +37,12 @@ class ListSales extends Component
         $this->totalSale = $this->data->sum(function ($item) {
             return $item->quantity * $item->unit_price;
         });
+
+        $this->emit('ok');
+    }
+
+    public function render()
+    {
+        return view('livewire.sale.list-sales');
     }
 }

@@ -86,6 +86,11 @@
           $(document).ready(function() {
             Livewire.on('modalOpen', function(value) {
               Livewire.emit('showDetail', value);
+              
+            });
+
+            Livewire.on('ok', function(value) {
+            
                 $('#userModal').modal('show');
             });
           });

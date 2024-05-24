@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('venta',Sales::class)->name('venta');
     Route::get('ventas',ListSales::class)->name('lista-ventas');
     //Ruta Products
-    Route::get('products', Product::class)->name('products');
+    Route::get('products', Product::class)->name('productos');
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

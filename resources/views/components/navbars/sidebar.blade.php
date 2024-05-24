@@ -6,19 +6,17 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0 d-flex text-wrap align-items-center" href=" {{ route('dashboard') }} ">
             <img src="{{ asset('assets') }}/custom/img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-2 font-weight-bold text-white">Dashboard</span>
+            <span class="ms-2 font-weight-bold text-white">Inicio</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse  w-auto  h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Paginas</h6>
-            </li>
+      
             <?php
-            $items = [['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'], 
+            $items = [ 
                         ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'], 
-                        ['title' => 'Productos', 'route' => 'products', 'icon' => 'category'], 
+                        ['title' => 'Productos', 'route' => 'productos', 'icon' => 'category'], 
                         ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'], 
                         ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'], 
                         ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']];
@@ -49,6 +47,7 @@
                 <span class="nav-link-text ms-1">{{ auth()->user()->name }}</span>
             </div>
         </a>
+        
     </div>
 
 </aside>

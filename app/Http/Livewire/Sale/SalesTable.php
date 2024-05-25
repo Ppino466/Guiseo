@@ -21,10 +21,16 @@ class SalesTable extends DataTableComponent
     ->latest();
     }
 
-    public function download()
+    public function download($value)
     {
-        
-        return Excel::download(new SalesExport, 'Venta_'.now(). '.xlsx');
+        // Convertir value a array si no lo es
+        $saleIds = is_array($value) ? $value : [$value];
+    
+        // Crear una instancia del exportador con los IDs de venta
+        $export = new SalesExport($saleIds);
+    
+        // Exportar a Excel
+        return Excel::download($export, 'Venta_' . now() . '.xlsx');
     }
 
     public function filters(): array

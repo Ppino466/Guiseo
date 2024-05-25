@@ -73,17 +73,15 @@
                             <div style="height: 400px; overflow-y: auto;">
                                 <livewire:sale.detail-table theme="bootstrap-5" />
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-success w-100 my-3"
-                                        wire:click.prevent="completedSale()">Confirmar Venta</button>
-                                </div>
-                                <div class="col-md-6">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end m-2">
                                 
-                                    <button type="button" class="btn btn-danger w-100 my-3"
+                                    <button type="button" class="btn btn-success  me-md-2"
+                                        wire:click.prevent="completedSale()">Confirmar Venta</button>
+                               
+                                
+                                    <button type="button" class="btn btn-outline-danger     "
                                         wire:click="rejectSale()">Cancelar</button>
-                                    </div>
-                            </div>
+                                </div>
                         </form>
                     </div>
                 </div>

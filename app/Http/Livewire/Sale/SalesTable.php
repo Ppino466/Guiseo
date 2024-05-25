@@ -2,15 +2,16 @@
 
 namespace App\Http\Livewire\Sale;
 
+use App\Exports\SalesExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Sale;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
-
 
 class SalesTable extends DataTableComponent
 {
@@ -18,6 +19,12 @@ class SalesTable extends DataTableComponent
     {
     return Sale::query()
     ->latest();
+    }
+
+    public function download()
+    {
+        
+        return Excel::download(new SalesExport, 'Venta_'.now(). '.xlsx');
     }
 
     public function filters(): array
@@ -89,13 +96,14 @@ class SalesTable extends DataTableComponent
                 ->format(function($value) {
                     return ucfirst(Carbon::parse($value)->toDateTimeString());
                 }),
-                Column::make('Detalle', 'id')->format(function ($value, $row, Column $column) {
-                    // Asegúrate de que $row contiene el campo 'id' o ajusta según tu estructura de datos.
-                    $boton = '<button type="button" wire:click="$emitUp(\'showDetail\', ' . $value . ')" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <i class="material-icons opacity-10">list_alt</i>
+                Column::make('Acciones', 'id')->format(function ($value, $row, Column $column) {
+                    $boton = '<button type="button" wire:click="$emit(\'modalOpen\', ' . $value . ')" class="btn btn-info">
+                                <i class="material-icons opacity-10">preview</i>
                               </button>';
                 
-                    return $boton;
+                    return '<div class="btn-group">' .$boton . '<button type="button" wire:click="download('.$value.')" class="btn btn-success">
+                    <i class="material-icons opacity-10">list_alt</i>
+                  </button>';
                 })->html(),
                 
 

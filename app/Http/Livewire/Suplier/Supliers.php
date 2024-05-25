@@ -10,6 +10,8 @@ class Supliers extends Component
 {
     public $suplier;
 
+    public $suplierId;
+
     public $name, $contact_name, $address,$phone, $email;
 
     protected $listeners = ['editSuplier' => 'editSuplier','downSuplier' => 'downSuplier','upSuplier'=> 'upSuplier'];
@@ -17,7 +19,8 @@ class Supliers extends Component
     public function editSuplier($suplierId)
     {
 
-        if ($suplierId) {
+        $this->suplierId = $suplierId;
+        if ($this->suplierId) {
             $this->suplier = Supplier::find($suplierId);
             $this->name = $this->suplier->name;
             $this->contact_name = $this->suplier->contact_name;
@@ -25,12 +28,15 @@ class Supliers extends Component
             $this->phone = $this->suplier->phone;
             $this->email = $this->suplier->email;
         } else {
+            $this->suplierId = '';
             $this->name = '';
             $this->contact_name = '';
             $this->address = '';
             $this->phone = '';
             $this->email = '';
         }
+
+        $this->emit('ok');
     }
 
     public function updateSuplier()
@@ -60,7 +66,7 @@ class Supliers extends Component
     public function saveSuplier()
     {
         // Validar y registrar al nuevo usuario
-        $suplier= Supplier::create([
+        Supplier::create([
             'name' => $this->name,
             'contact_name' => $this->contact_name,
             'address' => $this->address,

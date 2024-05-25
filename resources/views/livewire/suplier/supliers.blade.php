@@ -23,11 +23,11 @@
         </div>
     </div>
     <div class="modal fade" id="suplierModal" tabindex="-1" role="dialog" aria-labelledby="suplierModalLabel"
-        aria-hidden="true" wire:ignore>
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    @if ($suplier)
+                    @if ($suplierId)
                         <h5 class="modal-title font-weight-normal" id="suplierModalLabel">Editar Proveedor</h5>
                     @else
                         <h5 class="modal-title font-weight-normal" id="suplierModalLabel">Registrar Proveedor</h5>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    @if ($suplier)
+                    @if ($suplierId)
                         <button type="button" class="btn btn-success" wire:click="updateSuplier"
                             wire:loading.attr="disabled" wire:target="updateSuplier">Guardar</button>
                         <div wire:loading wire:target="updateSuplier">
@@ -105,6 +105,11 @@
 
             Livewire.on('modalOpen', function(value) {
                 Livewire.emit('editSuplier', value);
+               
+            });
+
+            Livewire.on('ok', function(value) {
+            
                 $('#suplierModal').modal('show');
             });
 

@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" wire:ignore>
+    <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -67,7 +67,7 @@
                         </div>
                     @else
                         <button type="button" class="btn btn-success" wire:click="saveUser"
-                            wire:loading.attr="disabled" wire:target="saveUser">Guardar</button>
+                            wire:loading.attr="disabled" wire:target="saveUser">Registrar</button>
                         <div wire:loading wire:target="saveUser">
                             Procesando...
                         </div>
@@ -98,8 +98,13 @@
 
             Livewire.on('modalOpen', function(value) {
                 Livewire.emit('editUser', value);
-                $('#userModal').modal('show');
+            
             });
+
+            Livewire.on('ok', function(value) {
+            
+            $('#userModal').modal('show');
+        });
 
             Livewire.on('listenerBaja', function(value) {
                 mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!", () => {

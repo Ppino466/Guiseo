@@ -24,11 +24,14 @@ class Users extends Component
             $this->phone = $this->user->phone;
             $this->email = $this->user->email;
         } else {
+            $this->user = "";
             $this->name = '';
             $this->lastName = '';
             $this->phone = '';
             $this->email = '';
         }
+
+        $this->emit('ok');
     }
 
     public function updateUser()

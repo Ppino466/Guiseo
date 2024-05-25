@@ -73,7 +73,7 @@
                         </div>
                     @else
                         <button type="button" class="btn btn-success" wire:click="saveSuplier"
-                            wire:loading.attr="disabled" wire:target="saveSuplier">Guardar</button>
+                            wire:loading.attr="disabled" wire:target="saveSuplier">Registrar</button>
                         <div wire:loading wire:target="saveSuplier">
                             Procesando...
                         </div>

@@ -16,10 +16,11 @@ class Supliers extends Component
 
     public function editSuplier($suplierId)
     {
+
         if ($suplierId) {
             $this->suplier = Supplier::find($suplierId);
             $this->name = $this->suplier->name;
-            $this->contact_name->suplier->contact_name;
+            $this->contact_name = $this->suplier->contact_name;
             $this->address= $this->suplier->address;
             $this->phone = $this->suplier->phone;
             $this->email = $this->suplier->email;
@@ -86,6 +87,7 @@ class Supliers extends Component
 
     public function upsuplier($suplierId)
     {
+        
         // Buscar al usuario por su ID
         $suplier= Supplier::find($suplierId);
 

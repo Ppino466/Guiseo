@@ -22,6 +22,9 @@ use App\Http\Livewire\Tables;
 use App\Http\Livewire\User\Users;
 use App\Http\Livewire\User\UserView;
 use App\Http\Livewire\VirtualReality;
+use App\Http\Livewire\Suplier\Supliers;
+
+
 
 
 /*
@@ -62,9 +65,13 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas Activity log 
     Route::get('log',LogView::class)->name('activity log');
 
+    //Rutas Activity log 
+    Route::get('supliers',Supliers::class)->name('Proveedores');    
+
     //Rutas Ventas
     Route::get('venta',Sales::class)->name('venta');
     Route::get('ventas',ListSales::class)->name('lista-ventas');
+
 
     //Rutas Example
     Route::get('billing', Billing::class)->name('billing');

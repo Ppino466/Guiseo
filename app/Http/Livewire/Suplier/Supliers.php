@@ -107,6 +107,6 @@ class Supliers extends Component
 
     public function render()
     {
-        return view('livewire.Suplier.supliers');
+        return view('livewire.suplier.supliers');
     }
 }

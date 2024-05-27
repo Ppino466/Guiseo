@@ -19,7 +19,8 @@ class Supplier extends Model
         'contact_name', 
         'address', 
         'phone',
-        'email'
+        'email',
+        'status'
     ];
 
     public function getActivitylogOptions(): LogOptions

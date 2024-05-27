@@ -6,6 +6,7 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Supplier;
 use Carbon\Carbon;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 
 class SuplierTable extends DataTableComponent
 {
@@ -31,6 +32,7 @@ class SuplierTable extends DataTableComponent
                 ->sortable(),
             Column::make("Correo Electronico", "email")
                 ->sortable(),
+            BooleanColumn::make("Estatus",'estatus'),    
                 Column::make("Fecha registro", "created_at")
                 ->format(function($value) {
                     return ucfirst(Carbon::parse($value)->toDateString());

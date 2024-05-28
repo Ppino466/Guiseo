@@ -32,7 +32,7 @@ class SuplierTable extends DataTableComponent
                 ->sortable(),
             Column::make("Correo Electronico", "email")
                 ->sortable(),
-            BooleanColumn::make("Estatus",'estatus'),    
+            BooleanColumn::make("Estatus",'status'),    
                 Column::make("Fecha registro", "created_at")
                 ->format(function($value) {
                     return ucfirst(Carbon::parse($value)->toDateString());

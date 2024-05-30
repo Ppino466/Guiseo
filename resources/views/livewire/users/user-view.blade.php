@@ -43,9 +43,9 @@
                                         <input id="about" class="form-control" value="{{ $user['about'] }}"
                                             disabled>
                                  
-                                        <label for="updated_at" class="form-label">Ultima Modificación:</label>
-                                        <input type="text" id="updated_at" class="form-control"
-                                            value="{{ $user['updated_at']->diffForHumans() }}" disabled>
+                                            <label for="updated_at" class="form-label">Ultima Modificación:</label>
+                                            <input type="text" id="updated_at" class="form-control"
+                                                value="{{ $user['updated_at'] ? $user['updated_at']->diffForHumans() : 'Sin modificación' }}" disabled>                                            
                                   
                             </div>
                         </div>

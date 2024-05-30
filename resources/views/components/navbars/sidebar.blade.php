@@ -12,31 +12,45 @@
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
-      
+
             <?php
             $items = [
-                ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'],
-                ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'],
-                ['title' => 'Productos', 'route' => 'productos', 'icon' => 'category'], 
-                ['title' => 'Proveedores', 'route' => 'Proveedores', 'icon' => 'contacts'],
-                ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'],
-                ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'],
-                ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
-            ];
-           
+            ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'], 
+            ['title' => 'Productos', 'route' => 'productos', 'icon' => 'category'],
+            ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'], 
+            ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'], 
+            ['title' => 'Proveedores', 'route' => 'Proveedores', 'icon' => 'contacts'],
+            ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'], 
+            ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']];
+            $vendedorItems = array_slice($items, 0, 4);
             ?>
-
+            @if (auth()->user()->hasAnyRole(['Admin', 'Master']))
             @foreach ($items as $item)
-                <li class="nav-item">
-                    <a class="nav-link text-white {{ Route::currentRouteName() == $item['route'] ? ' active bg-gradient-info' : '' }}"
-                        href="{{ route($item['route']) }}">
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">{{ $item['icon'] }}</i>
-                        </div>
-                        <span class="nav-link-text ms-1">{{ $item['title'] }}</span>
-                    </a>
-                </li>
+                
+                    <li class="nav-item">
+                        <a class="nav-link text-white {{ Route::currentRouteName() == $item['route'] ? ' active bg-gradient-info' : '' }}"
+                            href="{{ route($item['route']) }}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">{{ $item['icon'] }}</i>
+                            </div>
+                            <span class="nav-link-text ms-1">{{ $item['title'] }}</span>
+                        </a>
+                    </li>
+             
             @endforeach
+            @else
+            @foreach ($vendedorItems as $item)
+            <li class="nav-item">
+                <a class="nav-link text-white {{ Route::currentRouteName() == $item['route'] ? ' active bg-gradient-info' : '' }}"
+                    href="{{ route($item['route']) }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">{{ $item['icon'] }}</i>
+                    </div>
+                    <span class="nav-link-text ms-1">{{ $item['title'] }}</span>
+                </a>
+            </li>
+        @endforeach      
+            @endif
         </ul>
     </div>
 
@@ -51,7 +65,7 @@
                 <span class="nav-link-text ms-1">{{ auth()->user()->name }}</span>
             </div>
         </a>
-        
+
     </div>
 
 </aside>

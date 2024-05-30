@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
-use App\Http\Livewire\Log;
 use App\Http\Livewire\Log\Log as LogView;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
@@ -55,34 +54,34 @@ Route::get('user-profile', UserProfile::class)->middleware('auth')->name('user-p
 Route::get('user-management', UserManagement::class)->middleware('auth')->name('user-management');
 
 Route::group(['middleware' => 'auth'], function () {
+    
+    Route::group(['middleware' => ['role:Admin|Master']], function () {
+      
 
-    //Ruta dashboard
-    Route::get('dashboard', Dashboard::class)->name('dashboard');
+        // Rutas users
+        Route::get('users', Users::class)->name('usuarios');
+      
 
-    //Rutas users
-    Route::get('users', Users::class)->name('usuarios');
-    Route::get('user/{id}',UserView::class)->name('usuario');
+        // Rutas Activity log
+        Route::get('log', LogView::class)->name('activity log');
 
-    //Rutas Activity log
-    Route::get('log',LogView::class)->name('activity log');
+        // Rutas Suppliers
+        Route::get('supliers', Supliers::class)->name('Proveedores');
+    });
 
-    //Rutas Activity log 
-    Route::get('supliers',Supliers::class)->name('Proveedores');    
+    Route::group(['middleware' => ['role:Admin|Master|Vendedor']], function () {
 
-    //Rutas Ventas
-    Route::get('venta',Sales::class)->name('venta');
-    Route::get('ventas',ListSales::class)->name('lista-ventas');
-    //Ruta Products
-    Route::get('products', Product::class)->name('productos');
+          // Ruta perfil
+        Route::get('user/{id}', UserView::class)->name('usuario');
+          // Ruta dashboard
+          Route::get('dashboard', Dashboard::class)->name('dashboard');
 
+        // Rutas Ventas
+        Route::get('venta', Sales::class)->name('venta');
+        Route::get('ventas', ListSales::class)->name('lista-ventas');
 
-    //Rutas Example
-    Route::get('billing', Billing::class)->name('billing');
-    Route::get('profile', Profile::class)->name('profile');
-    Route::get('tables', Tables::class)->name('tables');
-    Route::get('notifications', Notifications::class)->name("notifications");
-    Route::get('virtual-reality', VirtualReality::class)->name('virtual-reality');
-    Route::get('static-sign-in', StaticSignIn::class)->name('static-sign-in');
-    Route::get('static-sign-up', StaticSignUp::class)->name('static-sign-up');
-    Route::get('rtl', RTL::class)->name('rtl');
+        // Ruta Products
+        Route::get('products', Product::class)->name('productos');
+    });
 });
+

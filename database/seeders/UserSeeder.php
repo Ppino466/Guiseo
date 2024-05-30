@@ -13,29 +13,50 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([   
+       $userMaster = User::create([   
             'name' => 'Guillermo',
             'last_name' => 'Garcia',
             'email' => 'biohazardm3@gmail.com',
-            'phone' => '(+52) 333-333-3333',
+            'phone' => '333-333-3333',
+            'location' => 'gdl',
+            'about' => 'master',
+            'status' => 1,
+            'password' => ('123456789'),
+            'created_at' => now(),
+            'updated_at' => null
+        ]); 
+
+        $userAdmin = User::create([   
+            'name' => 'Juan',
+            'last_name' => 'Ruiz',
+            'email' => 'admin@gmail.com',
+            'phone' => '323-333-3333',
             'location' => 'gdl',
             'about' => 'admin',
             'status' => 1,
             'password' => ('123456789'),
-            'created_at' => now()
+            'created_at' => now(),
+            'updated_at' => null
         ]);
 
-        User::create([   
-            'name' => 'Juan',
-            'last_name' => 'Ruiz',
-            'email' => 'kiran82@gmail.com',
-            'phone' => '(+52) 323-333-3333',
+        $userVentas = User::create([   
+            'name' => 'Carlos',
+            'last_name' => 'Gonzalez',
+            'email' => 'ventas@gmail.com',
+            'phone' => '323-333-3333',
             'location' => 'gdl',
-            'about' => 'empleado',
+            'about' => 'vendedor',
             'status' => 0,
             'password' => ('123456789'),
-            'created_at' => now()
+            'created_at' => now(),
+            'updated_at' => null
         ]);
+
+
+        //Asignamos roles a cada usuario
+        $userMaster->assignRole('Master');
+        $userAdmin->assignRole('Administrador');
+        $userVentas->assignRole('Vendedor');
 
     }
 }

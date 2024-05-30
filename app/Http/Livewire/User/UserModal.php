@@ -56,9 +56,12 @@ public function saveOrUpdateUser()
             'phone' => $this->phone,
             'password' => '123456789',
             'location' => 'gdl',
-            'about' => 'empleado',
+            'about' => 'vendedor',
             'status' => true
         ]);
+
+        //Asignamos el rol de vendedor
+        $user->assignRole('Vendedor');
 
         // Enviar la notificación de bienvenida con la contraseña generada
         $user->notify(new WelcomeNotification(123456789));

@@ -6,12 +6,15 @@ use App\Exports\SalesExport;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Sale;
+use App\Models\SaleDetail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use Dompdf\Dompdf;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class SalesTable extends DataTableComponent
 {
@@ -21,7 +24,7 @@ class SalesTable extends DataTableComponent
     ->latest();
     }
 
-    public function download($value)
+   /*  public function download($value)
     {
         // Convertir value a array si no lo es
         $saleIds = is_array($value) ? $value : [$value];
@@ -31,7 +34,7 @@ class SalesTable extends DataTableComponent
     
         // Exportar a Excel
         return Excel::download($export, 'Venta_' . now() . '.xlsx');
-    }
+    } */
 
     public function filters(): array
 {
@@ -115,4 +118,60 @@ class SalesTable extends DataTableComponent
 
         ];
     }
+
+    public function query($saleId)
+    {
+        // Asegúrate de que $saleId sea un entero
+        if (!is_numeric($saleId)) {
+            // Manejar el caso donde el ID de venta no es un número válido
+            abort(400, 'ID de venta no válido');
+        }
+    
+        return SaleDetail::where('sale_id', $saleId)
+            ->join('products', 'sale_details.product_id', '=', 'products.id')
+            ->join('sales', 'sale_details.sale_id', '=', 'sales.id')
+            ->join('users', 'sales.user_id', '=', 'users.id')
+            ->select([
+                'sale_details.id',
+                'sale_details.sale_id',
+                'sale_details.product_id', 
+                'products.name as product_name', 
+                'products.sku as product_sku', 
+                'sale_details.quantity',
+                DB::raw("CONCAT('$', FORMAT(sale_details.unit_price, 2)) AS unit_price"),
+                'sale_details.total_price',
+                DB::raw("DATE_FORMAT(sale_details.updated_at, '%d/%m/%Y') as formatted_updated_at"),
+                'users.name as user_name'
+            ])->get();
+    }
+    
+    
+    
+    
+
+    public function download($id)
+    {
+        //Carga en base 64 Isotipo
+        $path = 'img/logo.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $Isotipo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    
+        $saleDetail = $this->query($id);
+        
+        if (!$saleDetail) {
+            // Manejar el caso donde no se encuentra el detalle de venta
+            abort(404, 'Detalle de venta no encontrado');
+        }
+    
+        $dompdf = new Dompdf();
+        $html = View::make('pdf.detail_sale', compact('saleDetail', 'Isotipo'))->render();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+    
+        return response()->streamDownload(function () use ($dompdf) {
+            echo $dompdf->output();
+        }, 'venta.pdf');
+    }
+    
 }

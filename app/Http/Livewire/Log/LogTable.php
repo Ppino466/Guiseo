@@ -44,6 +44,16 @@ class LogTable extends DataTableComponent
             ->filter(function(Builder $builder, string $value) {
                 $builder->where('created_at','>=', $value);
             }),
+            SelectFilter::make('Evento')
+            ->options([
+                '' => 'All',
+                'updated' => 'Updated',
+                'created' => 'Created',
+                'deleted' => 'Deleted'
+            ])
+            ->filter(function(Builder $builder, string $value) {
+                $builder->where('event','=', $value);
+            }),
         ];
     }
 

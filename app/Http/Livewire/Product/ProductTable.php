@@ -128,7 +128,7 @@ class ProductTable extends DataTableComponent
                         'editar' => '<a wire:click="$emit(\'modalOpen\',' . $value . ')" class="btn btn-success"><i class="material-icons opacity-10">edit</i></a>',
                         'baja' => '<a wire:click="$emit(\'listenerBaja\',' . $value . ')" class="btn btn-danger"><i class="material-icons opacity-10">close</i></a>',
                         'alta' => '<a wire:click="$emit(\'listenerAlta\',' . $value . ')" class="btn btn-info"><i class="material-icons opacity-10">check</i></a>',
-                        'solicitud' => '<a wire:click="$emit(\'listenerAlta\',' . $value . ')" class="btn btn-info"><i class="material-icons opacity-10">phone</i></a>'
+                        'solicitud' => '<a wire:click="$emit(\'listenerBorrar\',' . $value . ')" class="btn btn-danger"><i class="material-icons opacity-10">delete_forever</i></a>'
                     ];
             
                     $botonesStatus = [

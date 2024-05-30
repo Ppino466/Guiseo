@@ -18,10 +18,11 @@
         </div>
     </div>
     <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Detalle Venta</h1>
+              
+              <h5 class="modal-title font-weight-normal">Detalle venta</h5>
               @if ($latestDate)
             <p class="card-text">Fecha: {{ \Carbon\Carbon::parse($latestDate)->format('d/m/Y H:i') }}</p>
         @else
@@ -69,12 +70,9 @@
                         <p class="card-text mb-0">No se encontró el nombre del usuario.</p>
                     @endif
                 </div>
-                <div>
+                
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">
-                        <i class="material-icons opacity-10">file_download</i>
-                    </button>
-                </div>
+                
             </div>
             
           </div>

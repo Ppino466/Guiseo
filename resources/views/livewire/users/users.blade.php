@@ -1,4 +1,4 @@
-<div class="">
+<div class="1">
     <!-- Navbar -->
     <!-- End Navbar -->
     <div class="container-fluid py-4">
@@ -22,59 +22,9 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @if ($user)
-                        <h5 class="modal-title font-weight-normal" id="userModalLabel">Editar usuario</h5>
-                    @else
-                        <h5 class="modal-title font-weight-normal" id="userModalLabel">Registrar usuario</h5>
-                    @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="userName" class="form-label">Nombre(s)</label>
-                        <input type="text" class="form-control" id="userName" name="name"
-                            placeholder="Ingresa nombre(s)" wire:model.defer="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="userLastName" class="form-label">Apellido(s)</label>
-                        <input type="text" class="form-control" id="userLastName" name="last_name"
-                            placeholder="Ingresa apellido(s)" wire:model.defer="lastName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="userPhone" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="userPhone" name="phone"
-                            placeholder="Ingresa teléfono" wire:model.defer="phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">Correo</label>
-                        <input type="text" class="form-control" id="userEmail" name="email"
-                            placeholder="Ingresa correo" wire:model.defer="email">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    @if ($user)
-                        <button type="button" class="btn btn-success" wire:click="updateUser"
-                            wire:loading.attr="disabled" wire:target="updateUser">Guardar</button>
-                        <div wire:loading wire:target="updateUser">
-                            Procesando...
-                        </div>
-                    @else
-                        <button type="button" class="btn btn-success" wire:click="saveUser"
-                            wire:loading.attr="disabled" wire:target="saveUser">Registrar</button>
-                        <div wire:loading wire:target="saveUser">
-                            Procesando...
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
+    <div class="modal fade" id="userModal" data-bs-backdrop="true" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        aria-hidden="true">
+        <livewire:user.user-modal />
     </div>
 
 </div>
@@ -96,15 +46,20 @@
                 mostrarAlerta('¡Éxito!', 'Usuario actualizado correctamente.', 'success');
             });
 
+            Livewire.on('userCreated', function(value) {
+                $('#userModal').modal('hide');
+                mostrarAlerta('¡Éxito!', 'Usuario creado correctamente.', 'success');
+            });
+
             Livewire.on('modalOpen', function(value) {
                 Livewire.emit('editUser', value);
-            
+
             });
 
             Livewire.on('ok', function(value) {
-            
-            $('#userModal').modal('show');
-        });
+
+                $('#userModal').modal('show');
+            });
 
             Livewire.on('listenerBaja', function(value) {
                 mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!", () => {

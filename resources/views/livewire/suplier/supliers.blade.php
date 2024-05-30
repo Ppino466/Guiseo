@@ -24,65 +24,8 @@
     </div>
     <div class="modal fade" id="suplierModal" tabindex="-1" role="dialog" aria-labelledby="suplierModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @if ($suplierId)
-                        <h5 class="modal-title font-weight-normal" id="suplierModalLabel">Editar Proveedor</h5>
-                    @else
-                        <h5 class="modal-title font-weight-normal" id="suplierModalLabel">Registrar Proveedor</h5>
-                    @endif
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="suplierName" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            placeholder="Ingresa nombre" wire:model.defer="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="contact_name" class="form-label">Nombre del Contacto</label>
-                        <input type="text" class="form-control" id="contact_name" name="contact_name"
-                            placeholder="Ingresa el nombre del contacto" wire:model.defer="contact_name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Domicilio</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            placeholder="Ingresa el domicilio" wire:model.defer="address">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Telefono</label>
-                        <input type="text" class="form-control" id="phone" name="phone"
-                            placeholder="Ingresa el telefono" wire:model.defer="phone">
-</div>
-                <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email"
-                            placeholder="Ingresa el email" wire:model.defer="email">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    @if ($suplierId)
-                        <button type="button" class="btn btn-success" wire:click="updateSuplier"
-                            wire:loading.attr="disabled" wire:target="updateSuplier">Guardar</button>
-                        <div wire:loading wire:target="updateSuplier">
-                            Procesando...
-                        </div>
-                    @else
-                        <button type="button" class="btn btn-success" wire:click="saveSuplier"
-                            wire:loading.attr="disabled" wire:target="saveSuplier">Registrar</button>
-                        <div wire:loading wire:target="saveSuplier">
-                            Procesando...
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
+        <livewire:suplier.suplier-modal />
     </div>
-
 </div>
 @push('js')
     <script>
@@ -103,6 +46,11 @@
                 mostrarAlerta('¡Éxito!', 'Proveedor actualizado correctamente.', 'success');
             });
 
+            Livewire.on('suplierCreated', function(value) {
+                $('#userModal').modal('hide');
+                mostrarAlerta('¡Éxito!', 'Proveedor se registrado correctamente.', 'success');
+            });
+
             Livewire.on('modalOpen', function(value) {
                 Livewire.emit('editSuplier', value);
                
@@ -121,7 +69,7 @@
             });
 
             Livewire.on('listenerAlta', function(value) {
-                mostrarConfirmacion("¿Estás seguro?", "Esto reactivará el proveedor+en el sistema.",
+                mostrarConfirmacion("¿Estás seguro?", "Esto reactivará el proveedor en el sistema.",
                     () => {
                         Livewire.emit('upSuplier', value);
                         mostrarAlerta("¡Realizado!", "El proveedor ha sido dado de alta.", "success");

@@ -24,13 +24,13 @@
             ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']];
             $vendedorItems = array_slice($items, 0, 4);
             ?>
-            @if (auth()->user()->hasAnyRole(['Admin', 'Master']))
+            @if (auth()->user()->hasAnyRole(['Administrador', 'Master']))
             @foreach ($items as $item)
                 
                     <li class="nav-item">
                         <a class="nav-link text-white {{ Route::currentRouteName() == $item['route'] ? ' active bg-gradient-info' : '' }}"
                             href="{{ route($item['route']) }}">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <div class="text-white text-center me-1 mt-1 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">{{ $item['icon'] }}</i>
                             </div>
                             <span class="nav-link-text ms-1">{{ $item['title'] }}</span>

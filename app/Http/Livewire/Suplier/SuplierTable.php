@@ -15,6 +15,7 @@ class SuplierTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setPaginationStatus(false);
     }
 
     public function columns(): array

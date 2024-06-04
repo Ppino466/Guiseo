@@ -11,13 +11,17 @@
                         </div>
 
                     </div>
+                 
                     <div class="m-4">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-secondary"
+                            @role('Master|Administrador')
+                            <button type="button" class="btn btn-success"
                                 wire:click="$emit('modalOpen')">Registrar</button>
+                                @endrole
                         </div>
                         <livewire:product.product-table theme="bootstrap-5" />
                     </div>
+                    
                 </div>
             </div>
         </div>

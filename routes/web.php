@@ -55,7 +55,7 @@ Route::get('user-management', UserManagement::class)->middleware('auth')->name('
 
 Route::group(['middleware' => 'auth'], function () {
     
-    Route::group(['middleware' => ['role:Admin|Master']], function () {
+    Route::group(['middleware' => ['role:Administrador|Master']], function () {
       
 
         // Rutas users
@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('supliers', Supliers::class)->name('Proveedores');
     });
 
-    Route::group(['middleware' => ['role:Admin|Master|Vendedor']], function () {
+    Route::group(['middleware' => ['role:Administrador|Master|Vendedor']], function () {
 
           // Ruta perfil
         Route::get('user/{id}', UserView::class)->name('usuario');

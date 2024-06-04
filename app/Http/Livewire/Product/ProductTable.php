@@ -119,9 +119,10 @@ class ProductTable extends DataTableComponent
                 ->format(function($value) {
                     return ucfirst(Carbon::parse($value)->diffForHumans());
                 }),
+                
                 Column::make("Acciones", "id")
                 ->format(function ($value, $row, Column $column) {
-                 
+                    if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Master')) {
                     $status = Inventory::find($value)->status ?? null;
             
                     $botones = [
@@ -141,6 +142,9 @@ class ProductTable extends DataTableComponent
                         $botones['editar'] .
                         ($botonesStatus[$status] ?? '') .
                         '</div>';
+                    } else {
+                      return   '<div><a wire:click="$emit(\'modalOpen\',' . $value . ')" class="btn btn-info"><i class="material-icons opacity-10">preview</i></a></div>';
+                    }
                 })
                 ->html(),   
 

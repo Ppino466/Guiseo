@@ -12,7 +12,7 @@
 
                     </div>
                     <div class="m-4">
-                        <livewire:log.log-table theme="bootstrap-5" />
+                        <livewire:log.log-table theme="bootstrap-4" />
                     </div>
                 </div>
             </div>

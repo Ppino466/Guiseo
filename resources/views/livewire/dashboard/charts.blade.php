@@ -45,13 +45,13 @@
         document.addEventListener('livewire:load', function () {
             var ctx = document.getElementById("chart-line-tasks").getContext("2d");
             var salesByDay = @json($salesByDay);
-
+            console.log(salesByDay);
             new Chart(ctx, {
                 type: "bar",
                 data: {
                     labels: Object.keys(salesByDay),
                     datasets: [{
-                        label: "Sales",
+                        label: "Ingreso",
                         tension: 0.4,
                         borderWidth: 0,
                         borderRadius: 4,

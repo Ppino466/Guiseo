@@ -29,15 +29,15 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-control my-3">
-                                        <label class="form-label">Nombre</label>
+                                    <div class="input-group input-group-static my-4">
+                                        <label>Nombre</label>
                                         <input type="text" class="form-control" id="productName" disabled
                                             wire:model="name">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-control my-3">
-                                        <label class="form-label">Precio</label>
+                                    <div class="input-group input-group-static my-4">
+                                        <label >Precio</label>
                                         <input type="text" class="form-control" id="price" disabled
                                             wire:model="unitPrice">
                                     </div>
@@ -55,16 +55,14 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-
                                     <div class="form-control my-3">
-
                                         <button wire:click.prevent="addDetail()" class="btn btn-success"><i
                                                 class="material-icons opacity-10">add</i></button>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-control my-3">
-                                        <label class="form-label">Total</label>
+                                    <div class="input-group input-group-static my-4">
+                                        <label>Total</label>
                                         <input type="text" class="form-control" id="total" disabled
                                             wire:model="totalPrice">
                                     </div>
@@ -93,7 +91,7 @@
     <script>
         $(document).ready(function() {
             $('#skuSelect').select2({
-                theme: "classic",
+              
                 placeholder: "Ingrese el SKU",
                 width: '100%',
                 minimumResultsForSearch: 20,

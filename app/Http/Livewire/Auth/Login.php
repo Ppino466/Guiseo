@@ -70,8 +70,11 @@ class Login extends Component
 
         // Regenerar la sesión
         session()->regenerate();
-
+        if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Master')) {
         // Redireccionar al dashboard
         return redirect('/dashboard');
+        } else {
+            return redirect('/ventas');
+        }
     }
 }

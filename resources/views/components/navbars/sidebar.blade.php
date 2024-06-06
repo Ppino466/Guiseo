@@ -4,8 +4,8 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0 d-flex text-wrap align-items-center" href=" {{ route('dashboard') }} ">
-            <img src="{{ asset('assets') }}/custom/img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
+        <a class="navbar-brand m-0 d-flex text-wrap align-items-center" href="/">
+            <img src="img/logo.png" class="navbar-brand-img h-100" alt="main_logo">
             <span class="ms-2 font-weight-bold text-white">Inicio</span>
         </a>
     </div>
@@ -15,14 +15,15 @@
 
             <?php
             $items = [
-            ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'], 
+                ['title' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'dashboard'],
             ['title' => 'Productos', 'route' => 'productos', 'icon' => 'category'],
             ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'], 
             ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'], 
             ['title' => 'Proveedores', 'route' => 'Proveedores', 'icon' => 'contacts'],
             ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'], 
-            ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']];
-            $vendedorItems = array_slice($items, 0, 4);
+            ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
+             ];
+            $vendedorItems = array_slice($items, 1, 3);
             ?>
             @if (auth()->user()->hasAnyRole(['Administrador', 'Master']))
             @foreach ($items as $item)

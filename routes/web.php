@@ -39,7 +39,11 @@ use App\Http\Livewire\Suplier\Supliers;
 */
 
 Route::get('/', function () {
-    return redirect('sign-in');
+    if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Master')) {
+    return redirect('dashboard');}
+    else {
+        return redirect('ventas');
+    }
 });
 
 Route::get('forgot-password', ForgotPassword::class)->middleware('guest')->name('password.forgot');
@@ -57,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::group(['middleware' => ['role:Administrador|Master']], function () {
       
+  // Ruta dashboard
+  Route::get('dashboard', Dashboard::class)->name('dashboard');
 
         // Rutas users
         Route::get('users', Users::class)->name('usuarios');
@@ -73,8 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
           // Ruta perfil
         Route::get('user/{id}', UserView::class)->name('usuario');
-          // Ruta dashboard
-          Route::get('dashboard', Dashboard::class)->name('dashboard');
+        
 
         // Rutas Ventas
         Route::get('venta', Sales::class)->name('venta');

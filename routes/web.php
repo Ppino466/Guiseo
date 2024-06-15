@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\ExampleLaravel\UserManagement;
 use App\Http\Livewire\ExampleLaravel\UserProfile;
+use App\Http\Livewire\Goal\Goals;
 use App\Http\Livewire\Log\Log as LogView;
 use App\Http\Livewire\Notifications;
 use App\Http\Livewire\Profile;
@@ -40,7 +41,6 @@ use App\Http\Livewire\Suplier\Supliers;
 
 Route::get('/', function () {
     return view('welcome');
-
 });
 
 Route::get('forgot-password', ForgotPassword::class)->middleware('guest')->name('password.forgot');
@@ -55,15 +55,17 @@ Route::get('user-profile', UserProfile::class)->middleware('auth')->name('user-p
 Route::get('user-management', UserManagement::class)->middleware('auth')->name('user-management');
 
 Route::group(['middleware' => 'auth'], function () {
-    
+
     Route::group(['middleware' => ['role:Administrador|Master']], function () {
-      
-  // Ruta dashboard
-  Route::get('dashboard', Dashboard::class)->name('dashboard');
+
+        // Ruta dashboard
+        Route::get('dashboard', Dashboard::class)->name('dashboard');
 
         // Rutas users
         Route::get('users', Users::class)->name('usuarios');
-      
+
+         // Rutas metas
+         Route::get('goals', Goals::class)->name('metas');
 
         // Rutas Activity log
         Route::get('log', LogView::class)->name('activity log');
@@ -74,9 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => ['role:Administrador|Master|Vendedor']], function () {
 
-          // Ruta perfil
+        // Ruta perfil
         Route::get('user/{id}', UserView::class)->name('usuario');
-        
+
 
         // Rutas Ventas
         Route::get('venta', Sales::class)->name('venta');
@@ -86,4 +88,3 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('products', Product::class)->name('productos');
     });
 });
-

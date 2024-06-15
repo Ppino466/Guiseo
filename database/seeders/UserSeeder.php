@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Goal;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
 class UserSeeder extends Seeder
 {
     /**
@@ -57,6 +57,11 @@ class UserSeeder extends Seeder
         $userMaster->assignRole('Master');
         $userAdmin->assignRole('Administrador');
         $userVentas->assignRole('Vendedor');
+
+        //Asignamos metas a cada usuario
+        Goal::getDefaultGoal($userMaster->id);
+        Goal::getDefaultGoal($userAdmin->id);
+        Goal::getDefaultGoal($userVentas->id);
 
     }
 }

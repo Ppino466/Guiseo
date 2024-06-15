@@ -20,7 +20,8 @@
             ['title' => 'Venta', 'route' => 'venta', 'icon' => 'point_of_sale'], 
             ['title' => 'Ventas', 'route' => 'lista-ventas', 'icon' => 'list_alt'], 
             ['title' => 'Proveedores', 'route' => 'Proveedores', 'icon' => 'contacts'],
-            ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'], 
+            ['title' => 'Usuarios', 'route' => 'usuarios', 'icon' => 'person'],
+            ['title' => 'Metas', 'route' => 'metas', 'icon' => 'score'], 
             ['title' => 'Logs', 'route' => 'activity log', 'icon' => 'history']
              ];
             $vendedorItems = array_slice($items, 1, 3);

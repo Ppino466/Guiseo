@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\User;
 
+use App\Models\Goal;
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
 use Livewire\Component;
@@ -62,6 +63,9 @@ public function saveOrUpdateUser()
 
         //Asignamos el rol de vendedor
         $user->assignRole('Vendedor');
+
+        //Asignamos la meta default al vendedor
+        $goal = Goal::getDefaultGoal($user->id);
 
         // Enviar la notificación de bienvenida con la contraseña generada
         $user->notify(new WelcomeNotification(123456789));

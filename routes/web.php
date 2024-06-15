@@ -39,11 +39,8 @@ use App\Http\Livewire\Suplier\Supliers;
 */
 
 Route::get('/', function () {
-    if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Master')) {
-    return redirect('dashboard');}
-    else {
-        return redirect('ventas');
-    }
+    return view('welcome');
+
 });
 
 Route::get('forgot-password', ForgotPassword::class)->middleware('guest')->name('password.forgot');

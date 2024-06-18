@@ -58,15 +58,15 @@ Route::get('user-profile', UserProfile::class)->middleware('auth')->name('user-p
 Route::get('user-management', UserManagement::class)->middleware('auth')->name('user-management');
 
 Route::group(['middleware' => 'auth'], function () {
-    
+
     Route::group(['middleware' => ['role:Administrador|Master']], function () {
-      
+
   // Ruta dashboard
   Route::get('dashboard', Dashboard::class)->name('dashboard');
 
         // Rutas users
         Route::get('users', Users::class)->name('usuarios');
-      
+
 
         // Rutas Activity log
         Route::get('log', LogView::class)->name('activity log');
@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
           // Ruta perfil
         Route::get('user/{id}', UserView::class)->name('usuario');
-        
+
 
         // Rutas Ventas
         Route::get('venta', Sales::class)->name('venta');

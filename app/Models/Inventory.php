@@ -15,12 +15,22 @@ class Inventory extends Model
 
     use HasFactory;
 
+    protected $fillable = [
+        'product_id',
+        'location',
+        'quantity',
+        'entry_date',
+        'min_quantity',
+        'max_quantity',
+        'status',
+    ];
+
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
         ->logOnly(['*']);
-       
+
     }
 
     public function product()

@@ -15,20 +15,19 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'description', 
+        'description',
         'price',
-        'supplier_id', 
+        'supplier_id',
         'category_id',
         'sku',
-        'image' 
-        
+        'image'
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
         ->logOnly(['*']);
-       
+
     }
 
     public function inventory()

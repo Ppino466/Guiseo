@@ -53,11 +53,9 @@
 
             Livewire.on('modalOpen', function(value) {
                 Livewire.emit('editSuplier', value);
-               
             });
 
             Livewire.on('ok', function(value) {
-            
                 $('#suplierModal').modal('show');
             });
 

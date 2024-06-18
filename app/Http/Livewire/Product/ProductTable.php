@@ -38,71 +38,71 @@ class ProductTable extends DataTableComponent
                 ->format(function ($value) {
                     if ($value) {
                         $data = Inventory::find($value);
-            
+
                         if ($data) {
                             $value = $data->quantity;
-                        } 
+                        }
                     }
-            
+
                     if ($value === 0) {
                         return '<span class="text-danger">' . $value . '</span>';
                     }
-            
+
                     return $value;
                 })
-                ->html(), 
+                ->html(),
                     Column::make("Ubicación", "id")
                 ->sortable()
                 ->format(function ($value) {
                     if ($value) {
                         $data = Inventory::find($value);
-                        
+
                         if ($data) {
                             $value = $data->location;
                         } else {
-                           
+
                             $value = "Sin ubicación";
                         }
                     }
-               
+
                     return $value;
-                }), 
+                }),
                 Column::make("Estatus", "id")
                 ->sortable()
                 ->format(function ($value) {
                     if ($value) {
                         $data = Inventory::find($value);
-            
+
                         if ($data) {
                             $value = $data->status;
                         }
                     }
-            
-                  
+
+
                     if ($value === 'pending_restock') {
                         return '<span class="text-danger">' . $value . '</span>';
                     }
-            
+
                     return $value;
                 })
-                ->html(),  
-                 
+                ->html(),
+
             Column::make("Proveedor", "supplier_id")
                 ->sortable()
                 ->format(function ($value) {
                     if ($value) {
                         $data = Supplier::find($value);
-                        
+
                         if ($data) {
                             $value = $data->name;
                         } else {
-                           
+
                             $value = "N/A";
                         }
                     }
-               
+
                     return $value;
-                }), 
+                }),
             Column::make("Categoria", "category_id")
                 ->sortable(),
             Column::make("Sku", "sku")
@@ -119,25 +119,25 @@ class ProductTable extends DataTableComponent
                 ->format(function($value) {
                     return ucfirst(Carbon::parse($value)->diffForHumans());
                 }),
-                
+
                 Column::make("Acciones", "id")
                 ->format(function ($value, $row, Column $column) {
                     if (auth()->user()->hasRole('Administrador') || auth()->user()->hasRole('Master')) {
                     $status = Inventory::find($value)->status ?? null;
-            
+
                     $botones = [
                         'editar' => '<a wire:click="$emit(\'modalOpen\',' . $value . ')" class="btn btn-success"><i class="material-icons opacity-10">edit</i></a>',
                         'baja' => '<a wire:click="$emit(\'listenerBaja\',' . $value . ')" class="btn btn-danger"><i class="material-icons opacity-10">close</i></a>',
                         'alta' => '<a wire:click="$emit(\'listenerAlta\',' . $value . ')" class="btn btn-info"><i class="material-icons opacity-10">check</i></a>',
                         'solicitud' => '<a wire:click="$emit(\'listenerBorrar\',' . $value . ')" class="btn btn-danger"><i class="material-icons opacity-10">delete_forever</i></a>'
                     ];
-            
+
                     $botonesStatus = [
                         'active' => $botones['baja'],
                         'inactive' => $botones['alta'],
                         'pending_restock' => $botones['solicitud']
                     ];
-            
+
                     return '<div class="btn-group">' .
                         $botones['editar'] .
                         ($botonesStatus[$status] ?? '') .
@@ -146,7 +146,7 @@ class ProductTable extends DataTableComponent
                       return   '<div><a wire:click="$emit(\'modalOpen\',' . $value . ')" class="btn btn-info"><i class="material-icons opacity-10">preview</i></a></div>';
                     }
                 })
-                ->html(),   
+                ->html(),
 
         ];
     }

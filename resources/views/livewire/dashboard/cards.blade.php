@@ -7,15 +7,17 @@
                     <i class="material-icons opacity-10">paid</i>
                 </div>
                 <div class="text-end pt-1">
-                    <p class="text-sm mb-0 text-capitalize">Ingreso del día (<span class="font-weight-bolder">{{$day}}</span>) </p>
-                    <h4 class="mb-0">${{number_format($salesDay,2)}}</h4>
-                </div>
+                    <p class="text-sm mb-0 text-capitalize">Ingreso del día
+                        <input type="text" id="datepicker" wire:model="selectedDate" class="form-control d-inline-block w-50 font-weight-bolder ms-2" style="background-color:#f2f2f2; text-align: center; cursor: pointer;">
+                    </p>
+                    <h4 class="mb-0">${{ number_format($salesDay, 2) }}</h4>
+                </div>                
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
                 <p class="mb-0">
-                    <span class="text-{{ $dayDifference > 0 ? 'success' : 'danger' }} text-sm font-weight-bolder px-2">
-                        {{ number_format($dayDifference, 2) }}%
+                    <span class="text-{{ $dayDifferencePercentage > 0 ? 'success' : 'danger' }} text-sm font-weight-bolder px-2">
+                        {{ number_format($dayDifferencePercentage, 2) }}%
                     </span>
                     Diferencia de ventas del día anterior
                 </p>
@@ -30,15 +32,15 @@
                       <i class="material-icons opacity-10">wallet</i>
                   </div>
                   <div class="text-end pt-1">
-                      <p class="text-sm mb-0 text-capitalize">Ingreso del mes (<span class="font-weight-bolder">{{$month}}</span>) </p>
+                      <p class="text-sm mb-0 text-capitalize">Ingreso del mes (<span class="font-weight-bolder">{{$this->getMonthName($selectedMonth)}}</span>) </p>
                       <h4 class="mb-0">${{ number_format($salesMonth, 2) }}</h4>
                   </div>
               </div>
               <hr class="dark horizontal my-0">
               <div class="card-footer p-3">
                 <p class="mb-0">
-                    <span class="text-{{ $monthDifference > 0 ? 'success' : 'danger' }} text-sm font-weight-bolder px-2">
-                        {{ number_format($monthDifference, 2) }}%
+                    <span class="text-{{ $monthDifferencePercentage > 0 ? 'success' : 'danger' }} text-sm font-weight-bolder px-2">
+                        {{ number_format($monthDifferencePercentage, 2) }}%
                     </span>
                     Diferencia de ventas del mes anterior
                 </p>
@@ -64,3 +66,17 @@
         </div>
     </div>
   </div>
+  @push('js')
+  <script>
+    $(document).ready(function(){
+        $("#datepicker").flatpickr({
+            dateFormat: "Y-m-d",
+            locale: "es",
+            allowInput: true,
+            defaultDate: "today",
+            minDate: "2024-01-01",
+            maxDate: "today"
+        });
+    });
+</script>
+  @endpush

@@ -64,7 +64,7 @@
         Livewire.on('confirmDelete', function(value) {
             mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!", () => {
                 Livewire.emit('deleteUser');
-                mostrarAlerta("¡Realizado!", "La cuenta se ha eliminado.", "success");
+                mostrarAlerta("¡Realizado!", "La cuenta se ha desactivado.", "success");
             });
         });
 

@@ -15,27 +15,46 @@ class GoalModal extends Component
     public $userId;
     public $type;
     public $amount;
-    public $star_date;
-    public $end_date;
+    public $startDate;
+    public $endDate;
     public $description;
-
+    
     protected $listeners = ['editGoal' => 'editGoal','downUser' => 'downUser','upUser'=> 'upUser'];
    
     public function editGoal($userId)
     {
+        $this->userId = User::find($userId)->name;
         if($userId){
             $this->goal = Goal::find($userId);
             $this->type = $this->goal->type;
             $this->amount = $this->goal->amount; 
+            $this->startDate = $this->goal->start_date;
+            $this->endDate = $this->goal->end_date;
+            $this->description = $this->goal->description;
         }
+
     }
 
-    public function mount()
+    public function updateGoal () 
     {
-
-        $role = Role::where('name', 'Vendedor')->first();
-
-        $this->listUser = User::role($role->name)->select('id', 'name')->get();
+       $this->validate([
+        'type' => 'required',
+        'amount' => 'required',
+        'startDate' => 'required',
+        'endDate' => 'required',
+        'description' => 'required',
+       ]);
+       
+            $symbols = array("$",",");    
+            $this->goal->type = $this->type;
+            $this->goal->amount =  str_replace($symbols, '', $this->amount); 
+            $this->goal->start_date = $this->startDate;
+            $this->goal->end_date = $this->endDate;
+            $this->goal->description = $this->description;
+            $this->goal->save();
+            //dd($this->goal->end_date);
+      $this->emit('goalUpdated');
+      $this->emit('refreshDatatable');
 
     }
 

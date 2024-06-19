@@ -8,18 +8,24 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6 my-3" wire:ignore>
+                <div class="col-md-6 my-3" >
                     <label class="form-label">Empleado</label>
-                    <select class="form-select" id="userSelect" aria-label="Buscar..." wire:model="user_id">
-                        <option value="">Selecciona al empleado</option>
-                        @foreach ($listUser as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('user_id')
+                    <div class="mb-3 input-group input-group-static">
+                        <input type="text" id="userId" wire:model="userId" class="form-control" disabled>
+                    </div>
+                    @error('userId')
                         <p class='text-danger inputerror'>{{ $message }}</p>
                     @enderror
                 </div>
+                <div class="col-md-6">
+                    <label for="type" class="form-label">Fecha Inico</label>
+                    <div class="mb-3 input-group input-group-static">
+                        <input type="text" id="dateInit" wire:model.defer="startDate" class="form-control ">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <label for="type" class="form-label">Tipo</label>
                     <div class="input-group input-group-static mb-4">
@@ -34,27 +40,19 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="type" class="form-label">Fecha Inico</label>
-                    <div class="mb-3 input-group input-group-static">
-                        <input type="text" id="dateInit" class="form-control ">
-                    </div>
-                </div>
                 <div class="col-md-6">
                     <label for="type" class="form-label">Fecha Fin</label>
                     <div class="mb-3 input-group input-group-static">
-                        <input type="text" id="dateFinish" class="form-control ">
+                        <input type="text" id="dateFinish" wire:model.defer="endDate" class="form-control" disabled>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6" wire:ignore>
+                <div class="col-md-6">
                     <label for="amount" class="form-label">Monto</label>
                     <div class="mb-3 input-group input-group-static">
                         <input type="text" class="form-control" id="amount" name="amount"
-                            placeholder="Ingresa el nonto" wire:model.defer="amount" maxlength="10">
+                            placeholder="Ingresa el nonto" wire:model="amount" >
                         @error('amount')
                             <p class='text-danger inputerror'>{{ $message }}</p>
                         @enderror
@@ -63,18 +61,17 @@
                 <div class="col-md-6">
                     <label for="type" class="form-label">Descripción</label>
                     <div class="input-group input-group-dynamic">
-                        <textarea class="form-control" rows="2" placeholder="Se breve..."
+                        <textarea class="form-control" rows="2" wire:model.defer="description" placeholder="Se breve..."
                             spellcheck="false"></textarea>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-success" wire:click="saveOrUpdateSuplier" wire:loading.attr="disabled"
-                wire:target="saveOrUpdateSuplier">Guardar</button>
-            <div wire:loading wire:target="saveOrUpdateSuplier">
+            <button type="button" class="btn btn-success" wire:click="updateGoal" wire:loading.attr="disabled"
+                wire:target="updateGoal">Guardar</button>
+            <div wire:loading wire:target="updateGoal">
                 Procesando...
             </div>
         </div>
@@ -83,18 +80,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-
-            $('#userSelect').select2({
-                placeholder: "Buscar...",
-                width: '100%',
-                minimumResultsForSearch: 20,
-                minimumInputLength: 3,
-                language: "es",
-                dropdownParent: $('#goalModal')
-            });
-
           
-
             var dateInit = $("#dateInit").flatpickr({
                 dateFormat: "Y-m-d",
                 locale: "es",
@@ -112,6 +98,7 @@
                 locale: "es",
                 allowInput: true,
                 minDate: "today",
+            
             });
 
             dateFinish.set("minDate", "today");

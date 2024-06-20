@@ -97,8 +97,9 @@
                     <div class="col-md-6">
                         <label for="image" class="form-label">Imagen</label>
                         <div class="mb-3 input-group input-group-static">
-                            <input type="text" class="form-control" id="image" name="image"
-                                placeholder="Ingresa imagen del producto" wire:model.defer="image">
+                            {{-- <input type="text" class="form-control" id="image" name="image"
+                                placeholder="Ingresa imagen del producto" wire:model.defer="image"> --}}
+                                <input type="file" class="form-control" id="image" name="image" wire:model.defer="image">
                             @error('image')
                                 <p class='text-danger inputerror'>{{ $message }}</p>
                             @enderror

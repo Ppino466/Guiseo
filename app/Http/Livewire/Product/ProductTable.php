@@ -5,9 +5,11 @@ namespace App\Http\Livewire\Product;
 use App\Models\Inventory;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use App\Models\Product;
 use App\Models\Supplier;
 use Carbon\Carbon;
+
 
 class ProductTable extends DataTableComponent
 {
@@ -107,8 +109,11 @@ class ProductTable extends DataTableComponent
                 ->sortable(),
             Column::make("Sku", "sku")
                 ->sortable(),
-            Column::make("Image", "image")
-                ->sortable(),
+            Column::make("Image","image")
+            ->format(function($value){
+                return '<img class="w-90" src="'. asset("storage/".$value) .'">';
+            })
+            ->html(),
             Column::make("Registrado", "created_at")
                 ->sortable()
                 ->format(function($value) {

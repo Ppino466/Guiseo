@@ -22,7 +22,7 @@ class ProductModal extends Component
 
     public $listCategories,$selectedCategory,$categoryId;
 
-    public $name,$description,$price,$sku,$image;
+    public $name,$description,$price,$sku,$image,$imagePath;
 
     public $productId,$quantity,$location,$entryDate,$minQuantity,$maxQuantity,$status;
 
@@ -70,7 +70,7 @@ class ProductModal extends Component
                 'categoryId' => 'required|integer',
                 //'sku' => 'required|string|unique:products,sku',
                 'sku' => 'required|string',
-                'image' => 'nullable|url',
+                'image' => 'nullable|image',
               ]);
         }
     }
@@ -162,6 +162,9 @@ class ProductModal extends Component
         $this->emit('productUpdated');
 
     }else{
+        //Guardado de imagen
+        $this->imagePath = $this->image->store('product-images','public');
+
         $product = Product::create([
             'name'=> $this->name,
             'description'=> $this->description,
@@ -169,7 +172,7 @@ class ProductModal extends Component
             'supplier_id'=> $this->supplierId,
             'category_id'=> $this->categoryId,
             'sku'=> $this->sku,
-            'image'=> $this->image
+            'image'=> $this->imagePath
         ]);
 
         Inventory::create([

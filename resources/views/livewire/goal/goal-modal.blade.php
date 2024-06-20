@@ -18,18 +18,9 @@
                     @enderror
                 </div>
                 <div class="col-md-6">
-                    <label for="type" class="form-label">Fecha Inico</label>
-                    <div class="mb-3 input-group input-group-static">
-                        <input type="text" id="dateInit" wire:model.defer="startDate" class="form-control ">
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row">
-                <div class="col-md-6">
                     <label for="type" class="form-label">Tipo</label>
                     <div class="input-group input-group-static mb-4">
-                        <select class="form-control" id="type" name="type" wire:model.defer="type">
+                        <select class="form-control" id="type" name="type" wire:model.defer="type"  @change="$wire.updatedSelectedDate()">
                             <option value="Quincena">Quincena</option>
                             <option value="Mensual">Mensual</option>
                             <option value="Cuatrimestral">Cuatrimestral</option>
@@ -39,7 +30,14 @@
                         @enderror
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="type" class="form-label">Fecha Inico</label>
+                    <div class="mb-3 input-group input-group-static">
+                        <input type="text" id="dateInit" wire:model.defer="startDate" class="form-control" disabled>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <label for="type" class="form-label">Fecha Fin</label>
                     <div class="mb-3 input-group input-group-static">
@@ -85,56 +83,11 @@
                 dateFormat: "Y-m-d",
                 locale: "es",
                 allowInput: true,
-                minDate: "today",
-                onClose: function(selectedDates) {
-                    if (selectedDates.length > 0) {
-                        updateEndDate();
-                    }
-                }
+                minDate: "today"
             });
 
-            var dateFinish = $("#dateFinish").flatpickr({
-                dateFormat: "Y-m-d",
-                locale: "es",
-                allowInput: true,
-                minDate: "today",
+
             
-            });
-
-            dateFinish.set("minDate", "today");
-
-            function updateEndDate() {
-                var selectedDates = dateInit.selectedDates;
-                if (selectedDates.length > 0) {
-                    var startDate = selectedDates[0];
-                    var endDate = new Date(startDate);
-                    var type = $("#type").val(); 
-
-                   
-                    switch (type) {
-                        case "Quincena":
-                            endDate.setDate(endDate.getDate() + 15);
-                            break;
-                        case "Mensual":
-                            endDate.setMonth(endDate.getMonth() + 1);
-                            break;
-                        case "Cuatrimestral":
-                            endDate.setMonth(endDate.getMonth() + 4);
-                            break;
-                        default:
-          
-                        endDate.setDate(endDate.getDate() + 30);
-                        break;
-                    }
-
-                    dateFinish.setDate(endDate);
-                    dateFinish.set("minDate", startDate);
-                }
-            }
-
-            $("#type").on("change", function() {
-                updateEndDate();
-            });
 
         });
     </script>

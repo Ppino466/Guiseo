@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            @if ($product)
+            @if ($productId)
                 <h5 class="modal-title font-weight-normal" id="userModalLabel">Editar producto</h5>
             @else
                 <h5 class="modal-title font-weight-normal" id="userModalLabel">Registrar producto</h5>

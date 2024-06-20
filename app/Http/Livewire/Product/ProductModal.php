@@ -16,29 +16,30 @@ class ProductModal extends Component
 {
     use WithFileUploads;
 
-    public $product,$Inventory;
+    public $product, $Inventory;
 
-    public $listSuppliers,$selectedSupplier,$supplierId;
+    public $listSuppliers, $selectedSupplier, $supplierId;
 
-    public $listCategories,$selectedCategory,$categoryId;
+    public $listCategories, $selectedCategory, $categoryId;
 
-    public $name,$description,$price,$sku,$image,$imagePath;
+    public $name, $description, $price, $sku, $image, $imagePath;
 
-    public $productId,$quantity,$location,$entryDate,$minQuantity,$maxQuantity,$status;
+    public $productId, $quantity, $location, $entryDate, $minQuantity, $maxQuantity, $status;
 
     public $currentStep = 1;
 
     protected $listeners = ['editProduct' => 'editProduct'];
 
-    public function increaseStep(){
+    public function increaseStep()
+    {
         // Función para validar paso a paso
         $this->validateData();
         $this->currentStep++;
     }
 
-    public function decreaseStep(){
+    public function decreaseStep()
+    {
         $this->currentStep--;
-
     }
 
     public function mount()
@@ -55,23 +56,25 @@ class ProductModal extends Component
         $this->listCategories = Categorie::all();
     }
 
-    public function validateData(){
+    public function validateData()
+    {
 
-        if($this->currentStep == 1){
+        if ($this->currentStep == 1) {
             $this->validate([
                 'supplierId' => 'required|integer'
             ]);
-        }
-        elseif($this->currentStep == 2){
-              $this->validate([
+        } elseif ($this->currentStep == 2) {
+            $this->validate([
                 'name' => 'required|string',
                 'description' => 'required|string',
                 'price' => 'required|numeric',
                 'categoryId' => 'required|integer',
                 //'sku' => 'required|string|unique:products,sku',
                 'sku' => 'required|string',
-                'image' => 'nullable|image',
-              ]);
+              
+            ]);
+        } elseif (!$this->productId) {
+                $this->validate(['image' => 'required|image|max:2048']); //Tamaño de carga very importante
         }
     }
 
@@ -89,7 +92,7 @@ class ProductModal extends Component
             $this->supplierId = $this->product->supplier_id;
             $this->categoryId = $this->product->category_id;
             $this->sku = $this->product->sku;
-            $this->image = $this->product->image;
+            // $this->image = $this->product->image;
 
             //Datos inventario
             if ($this->product) {
@@ -120,77 +123,83 @@ class ProductModal extends Component
             $this->maxQuantity = '';
             //Combo
             $this->status = '';
+            $this->image = '';
         }
         $this->emit('ok');
     }
 
     //Función para crear o editar los productos
-     public function saveOrUpdateProduct()
+    public function saveOrUpdateProduct()
 {
-    $productData = $this->validate([
-        'location' => 'required|string|max:255',
-        'quantity' => 'required|integer|min:1',
-        'entryDate' => 'required|date|before_or_equal:today',
-        'minQuantity' => 'required|integer|min:0',
-        'maxQuantity' => 'required|integer|min:0|gte:minQuantity',
-        'status' => 'required|in:active,inactive,pending_restock',
-    ]);
 
     if ($this->product) {
-        //Actualizar datos de producto
-        $this->product->name = $this->name;
-        $this->product->description = $this->description;
-        $this->product->price = $this->price;
-        $this->product->supplier_id = $this->supplierId;
-        $this->product->category_id = $this->categoryId;
-        $this->product->sku = $this->sku;
-        $this->product->image = $this->image;
-
-        //Actualizar datos de invetario
-        $this->Inventory->location = $this->location;
-        $this->Inventory->quantity = $this->quantity;
-        $this->Inventory->entry_date = $this->entryDate;
-        $this->Inventory->min_quantity = $this->minQuantity;
-        $this->Inventory->max_quantity = $this->maxQuantity;
-        $this->Inventory->status = $this->status;
-
-        //Guardar cambios
-        $this->product->save();
-        $this->Inventory->save();
-
-        //Emitir evento para notificar que la actualización fue exitosa
-        $this->emit('productUpdated');
-
-    }else{
-        //Guardado de imagen
-        $this->imagePath = $this->image->store('product-images','public');
-
-        $product = Product::create([
-            'name'=> $this->name,
-            'description'=> $this->description,
-            'price'=> $this->price,
-            'supplier_id'=> $this->supplierId,
-            'category_id'=> $this->categoryId,
-            'sku'=> $this->sku,
-            'image'=> $this->imagePath
+        // Actualizar datos del producto
+        $this->product->update([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'supplier_id' => $this->supplierId,
+            'category_id' => $this->categoryId,
+            'sku' => $this->sku,
         ]);
 
-        Inventory::create([
-            'product_id' => $product->id,
+        // Actualizar datos de inventario
+        $this->product->inventory->update([
             'location' => $this->location,
             'quantity' => $this->quantity,
             'entry_date' => $this->entryDate,
             'min_quantity' => $this->minQuantity,
             'max_quantity' => $this->maxQuantity,
-            'status' => $this->status
+            'status' => $this->status,
+        ]);
+
+        $product = $this->product;
+
+        //Reseteamos los stemps
+        $this->currentStep = 1;
+        
+        $this->emit('productUpdated');
+
+    } else {
+        // Crear nuevo producto
+        $product = Product::create([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'supplier_id' => $this->supplierId,
+            'category_id' => $this->categoryId,
+            'sku' => $this->sku,
+        ]);
+
+        // Crear inventario
+        $product->inventory()->create([
+            'location' => $this->location,
+            'quantity' => $this->quantity,
+            'entry_date' => $this->entryDate,
+            'min_quantity' => $this->minQuantity,
+            'max_quantity' => $this->maxQuantity,
+            'status' => $this->status,
         ]);
 
         $this->emit('productCreated');
+        
+        //Reseteamos los stemps
+        $this->currentStep = 1;
     }
+
+    // Guardar imagen con el ID del producto
+    if ($this->image) {
+        $this->imagePath = $this->image->storeAs('product-images', $product->id . '.' . $this->image->extension(), 'public');
+        $product->update(['image' => $this->imagePath]);
+    } 
+
+      //Guardado de imagen
+        //$this->imagePath = $this->image->store('product-images', 'public');
 
     // Emitir evento para refrescar la tabla de proveedores
     $this->emit('refreshDatatable');
 }
+
 
     public function render()
     {

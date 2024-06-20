@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" wire:ignore>
+    <div class="modal fade" id="productModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
         <livewire:product.product-modal />
     </div>
@@ -46,13 +46,13 @@
         //Mensaje en la creación de un producto
         Livewire.on('productCreated', function(value) {
                 mostrarAlerta('¡Éxito!', 'Producto registrado correctamente.', 'success');
-                //('#productModal').modal('hide');
+                $('#productModal').modal('hide');
         });
 
         //Mensaje para la actualización de información
         Livewire.on('productUpdated', function(value) {
                 mostrarAlerta('¡Éxito!', 'Producto actualizado correctamente.', 'success');
-                //('#productModal').modal('hide');
+                $('#productModal').modal('hide');
         });
 
         // Función para mostrar una alerta de SweetAlert2

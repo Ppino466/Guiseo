@@ -9,9 +9,13 @@ use App\Models\Supplier;
 use App\Models\Categorie;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
+
 
 class ProductModal extends Component
 {
+    use WithFileUploads;
+
     public $product,$Inventory;
 
     public $listSuppliers,$selectedSupplier,$supplierId;

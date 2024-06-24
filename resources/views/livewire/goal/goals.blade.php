@@ -12,7 +12,12 @@
                     </div>
 
                     <div class="m-4">
-
+                        <div class="d-flex justify-content-end">
+                            @role('Master|Administrador')
+                                <button type="button" class="btn btn-info"
+                                    wire:click="$emit('modalOpen')">Registrar</button>
+                            @endrole
+                        </div>
                         <livewire:goal.goal-table theme="bootstrap-5" />
                     </div>
 
@@ -20,7 +25,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="goalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
@@ -47,6 +51,35 @@
                 $('#goalModal').modal('hide');
                 mostrarAlerta('¡Éxito!', 'Meta actualizada correctamente.', 'success');
             })
+
+            Livewire.on('goalCreated', function(value) {
+
+                $('#goalModal').modal('hide');
+                mostrarAlerta('¡Éxito!', 'Meta registrada correctamente.', 'success');
+            })
+
+            Livewire.on('listenerInactive', function(value) {
+                mostrarConfirmacion("¿Estás seguro?", "Se notifcara al empleado el cambio de estatus.", () => {
+                    Livewire.emit('downGoal', value)
+                    mostrarAlerta("¡Realizado!", "La meta quedo suspendida.", "success")
+                })
+            })
+
+            Livewire.on('listenerActivate', function(value) {
+                mostrarConfirmacion("¿Estás seguro?", "Se notifcara al empleado el cambio de estatus.",
+                    () => { 
+                        Livewire.emit('upGoal', value);
+                        mostrarAlerta("¡Realizado!", "La meta se activo.", "success");
+                    });
+            });
+
+            Livewire.on('listenerDelete', function(value) {
+                mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!.",
+                    () => { 
+                        Livewire.emit('deleteGoal', value);
+                        mostrarAlerta("¡Realizado!", "La meta se activo.", "success");
+                    });
+            });
 
             const element = document.getElementById('amount');
             const maskOptions = {
@@ -75,8 +108,8 @@
                 }
             });
 
-              // Función para mostrar una alerta de SweetAlert2
-              function mostrarAlerta(titulo, mensaje, icono) {
+            // Función para mostrar una alerta de SweetAlert2
+            function mostrarAlerta(titulo, mensaje, icono) {
                 Swal.fire({
                     title: titulo,
                     text: mensaje,
@@ -92,7 +125,7 @@
                     text: mensaje,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#1A73E8",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Sí, continuar"
                 }).then((result) => {

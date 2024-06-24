@@ -185,7 +185,7 @@
                     text: mensaje,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#1A73E8",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Sí, continuar"
                 }).then((result) => {

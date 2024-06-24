@@ -13,7 +13,7 @@
                     </div>
                     <div class="m-4">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-secondary"
+                            <button type="button" class="btn btn-info"
                                 wire:click="$emit('modalOpen')">Registrar</button>
                         </div>
                         <livewire:user.user-table theme="bootstrap-5" />
@@ -100,7 +100,7 @@
                     text: mensaje,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#1A73E8",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Sí, continuar"
                 }).then((result) => {

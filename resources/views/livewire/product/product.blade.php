@@ -9,13 +9,11 @@
                         <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
                             <h6 class="text-white text-capitalize ps-3">Tabla Productos</h6>
                         </div>
-
                     </div>
-
                     <div class="m-4">
                         <div class="d-flex justify-content-end">
                             @role('Master|Administrador')
-                            <button type="button" class="btn btn-success"
+                            <button type="button" class="btn btn-info"
                                 wire:click="$emit('modalOpen')">Registrar</button>
                                 @endrole
                         </div>

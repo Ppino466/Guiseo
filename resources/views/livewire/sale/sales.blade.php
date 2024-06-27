@@ -161,10 +161,20 @@
                     totalMask.updateValue();
                 }
             });
+
             Livewire.on('saleNotFound', function() {
                 Swal.fire({
                     title: "Error",
                     text: "No hay venta activa.",
+                    icon: "error",
+                    confirmButtonText: 'Cerrar'
+                });
+            });
+
+            Livewire.on('quantityExceeded', function() {
+                Swal.fire({
+                    title: "Error",
+                    text: "La cantidad deseada supera la cantidad disponible en el inventario.",
                     icon: "error",
                     confirmButtonText: 'Cerrar'
                 });

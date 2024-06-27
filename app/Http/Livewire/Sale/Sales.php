@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Sale;
 
+use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetail;
@@ -34,7 +35,7 @@ class Sales extends Component
     public function mount()
     {
         $this->selectedProduct = null;
-        $this->listProducts = Product::whereHas('inventory', function($query) {
+        $this->listProducts = Product::whereHas('inventory', function ($query) {
             $query->where('quantity', '>', 0);
         })->get();
     }
@@ -49,50 +50,89 @@ class Sales extends Component
     public function downSale($id)
     {
         $row = SaleDetail::find($id);
-
+    
         if ($row) {
+            $inventory = Inventory::where('product_id', $row->product_id)->first();
+            if ($inventory) {
+                $inventory->update([
+                    'quantity' => $inventory->quantity + $row->quantity
+                ]);
+            }
             $row->delete();
         }
         $this->emit('refreshDatatable');
     }
+    
 
     public function completedSale()
-{
-    $sale = Sale::where('user_id', auth()->user()->id)
-                ->where('status', false)
-                ->first();
+    {
+        $sale = Sale::where('user_id', auth()->user()->id)
+            ->where('status', false)
+            ->first();
 
-    if ($sale) {
-        $sale->update(['status' => true]);
-        $this->emit('refreshDatatable');
-        $this->quantity = '';
-    } else {
-        $this->emit('saleNotFound'); 
+        if ($sale) {
+            $sale->update(['status' => true]);
+            $this->emit('refreshDatatable');
+            $this->quantity = '';
+        } else {
+            $this->emit('saleNotFound');
+        }
     }
-}
 
-public function rejectSale()
-{
-    $sale = Sale::where('user_id', auth()->user()->id)
-                ->where('status', false)
-                ->first();
-
-    if ($sale) {
-        $sale->delete();
-        $this->emit('refreshDatatable');
-        $this->quantity = '';
-    } else {
-        $this->emit('saleNotFound'); 
+    public function rejectSale()
+    {
+        $sale = Sale::where('user_id', auth()->user()->id)
+            ->where('status', false)
+            ->first();
+    
+        if ($sale) {
+    
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+    
+            // Devolver la cantidad de cada producto al inventario
+            foreach ($saleDetails as $detail) {
+                $inventory = Inventory::where('product_id', $detail->product_id)->first();
+                if ($inventory) {
+                    $inventory->update([
+                        'quantity' => $inventory->quantity + $detail->quantity
+                    ]);
+                }
+            }
+    
+            // Eliminar los detalles de la venta
+            SaleDetail::where('sale_id', $sale->id)->delete();
+    
+            // Eliminar la venta
+            $sale->delete();
+    
+            // Emitir evento para refrescar el datatable
+            $this->emit('refreshDatatable');
+            $this->quantity = '';
+        } else {
+            // Emitir evento si no se encuentra la venta
+            $this->emit('saleNotFound');
+        }
     }
-}
+    
 
     public function addDetail()
     {
         $this->validate([
             'name' => 'required',
-            'quantity' => 'required'
+            'quantity' => 'required|integer|min:1'
 
         ]);
+
+        // Obtener el producto seleccionado
+        $inventory = Inventory::where('product_id', $this->selectedProduct->id)->first();
+
+        // Verificar si hay suficiente cantidad en el inventario
+        if ($this->quantity > $inventory->quantity) {
+            // Emitir un evento indicando que la cantidad supera la disponible
+            $this->emit('quantityExceeded');
+            return;
+        }
+
         $sale = Sale::where('user_id', auth()->user()->id)
             ->where('status', false)
             ->first();
@@ -129,6 +169,11 @@ public function rejectSale()
 
         $sale->update([
             'total' => $sale->total + $totalPrice
+        ]);
+
+        // Reducir la cantidad del inventario
+        $inventory->update([
+            'quantity' => $inventory->quantity - $this->quantity
         ]);
 
         $this->emit('refreshDatatable');

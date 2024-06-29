@@ -44,64 +44,70 @@
             </div>
         </div>
     </div>
-    
     <div class="col-lg-5 col-md-6 mb-4">
-      <div class="card">
-          <div class="card-header pb-0">
-              <div class="row">
-                  <div class="col-lg-6 col-7">
-                      <h6>Ventas por empleado</h6>
-                      <p class="text-sm mb-0 text-capitalize">Mes en curso (<span class="font-weight-bolder">{{$month}}</span>) </p>
-                  </div>
-                  <div class="col-lg-6 col-5 my-auto text-end">
-                    <a class="btn" wire:click="refreshData"><i class="material-icons opacity-10">update</i></a>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body px-0 pb-2">
-            <div class="table-responsive">
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ventas</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Meta</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($totalSaleUser as $sale)
-                        <tr>
-                            <td>
-                                <div class="d-flex flex-column justify-content-center p-2">
-                                    <h6 class="mb-0 text-sm">{{ $sale->user_name }}</h6>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <span class="text-xs font-weight-bold"> ${{ number_format($sale->total_sales, 2) }} </span>
-                            </td>
-                            <td class="align-middle">
-                                <div class="progress-wrapper w-75 mx-auto">
-                                    <div class="progress-info">
-                                        <div class="progress-percentage">
-                                            <span class="text-xs font-weight-bold">{{ round($sale->percentage_achieved) }}%</span>
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="col-lg-6 col-7">
+                        <h6>Ventas por empleado</h6>
+                        <p class="text-sm mb-0 text-capitalize">Mes en curso (<span class="font-weight-bolder">{{$month}}</span>) </p>
+                    </div>
+                    <div class="col-lg-6 col-5 my-auto text-end">
+                        <a class="btn" wire:click="refreshData"><i class="material-icons opacity-10">update</i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ventas</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Meta</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha de Meta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($totalSaleUser as $sale)
+                            <tr>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center p-2">
+                                        <h6 class="mb-0 text-sm">{{ $sale->user_name }}</h6>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> ${{ number_format($sale->total_sales, 2) }} </span>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="progress-wrapper w-75 mx-auto">
+                                        <div class="progress-info">
+                                            <div class="progress-percentage">
+                                                <span class="text-xs font-weight-bold">{{ round($sale->percentage_achieved) }}%</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-info" style="width: {{ round($sale->percentage_achieved) }}%"
+                                                role="progressbar" aria-valuenow="{{ round($sale->percentage_achieved) }}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
                                         </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-gradient-info" style="width: {{ round($sale->percentage_achieved) }}%"
-                                            role="progressbar" aria-valuenow="{{ round($sale->percentage_achieved) }}" aria-valuemin="0"
-                                            aria-valuemax="100"></div>
+                                    <div class="text-center mt-2">
+                                        <span class="text-xs font-weight-bold">Meta: ${{ number_format($sale->goal_amount, 2) }}</span>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold">{{ \Carbon\Carbon::parse($sale->goal_end_date)->format('d-m-Y') }}</span>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-          </div>
-      </div>
-  </div>
+        </div>
+    </div>
+    
     <div class="col-lg-3 col-md-6" >
         <div class="card h-100">
             <div class="card-header pb-0">

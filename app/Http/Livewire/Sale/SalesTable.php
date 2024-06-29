@@ -67,7 +67,6 @@ class SalesTable extends DataTableComponent
     {
         $this->setPrimaryKey('id');
         $this->setSearchDisabled();
-        $this->setPaginationStatus(false);
         $this->setColumnSelectDisabled();
         $this->setEmptyMessage('Nada capturado');
     }

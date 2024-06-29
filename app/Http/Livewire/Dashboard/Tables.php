@@ -44,6 +44,7 @@ class Tables extends Component
                 DB::raw('SUM(sale_details.quantity) as quantity_sold')
             )
             ->groupBy('categories.name')
+            ->orderByDesc('total_sales')
             ->get();
     }
     
@@ -57,16 +58,27 @@ class Tables extends Component
             ->join('products', 'sale_details.product_id', '=', 'products.id')
             ->leftJoin('sales', 'sale_details.sale_id', '=', 'sales.id')
             ->leftJoin('users', 'sales.user_id', '=', 'users.id')
+            ->leftJoin('goals', function($join) {
+                $join->on('users.id', '=', 'goals.user_id')
+                     ->where('goals.status', '=', 'active');
+            })
             ->whereBetween('sales.created_at', [$startOfMonth, $endOfMonth]) 
             ->select(
                 DB::raw("CONCAT(users.name, ' ', users.last_name) as user_name"),
                 DB::raw('SUM(sale_details.unit_price * sale_details.quantity) as total_sales'),
-                DB::raw("(SUM(sale_details.unit_price * sale_details.quantity) / 1000 * 100) as percentage_achieved")
+                DB::raw("(SUM(sale_details.unit_price * sale_details.quantity) / goals.amount * 100) as percentage_achieved"),
+                'goals.amount as goal_amount',
+                'goals.end_date as goal_end_date'
             )
-            ->groupBy('users.name', 'users.last_name') 
+            ->groupBy('users.id', 'users.name', 'users.last_name', 'goals.amount', 'goals.end_date') 
+            ->having('goal_amount', '>', 0)
+            ->orderByDesc('total_sales')
             ->get();
-
     }
+    
+    
+    
+    
 
     public function calculateInventoryLevel()
     {

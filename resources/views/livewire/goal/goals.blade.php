@@ -46,6 +46,16 @@
                 }
             });
 
+            Livewire.on('listenerComplete', function(value) {
+                Livewire.emit('editGoal', value);
+                $('#goalModal').modal('show');
+
+                // Actualizar la máscara después de abrir el modal y recibir datos de Livewire
+                if (mask && document.getElementById('amount')) {
+                    mask.updateValue();
+                }
+            });
+
             Livewire.on('goalUpdated', function(value) {
 
                 $('#goalModal').modal('hide');

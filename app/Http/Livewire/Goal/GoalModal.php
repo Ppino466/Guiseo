@@ -19,20 +19,22 @@ class GoalModal extends Component
     public $endDate;
     public $description;
     public $selectedUser;
+    public $statusGoal;
 
     protected $listeners = ['editGoal' => 'editGoal', 'downGoal' => 'downGoal', 'upGoal' => 'upGoal','deleteGoal'=> 'deleteGoal'];
 
-    /* public function messages(): array
+    public function messages(): array
     {
         return [
-            'name.required' => 'El nombre es requerido',
-            'lastName.required' => 'El apellido es requerido',
-            'email.required' => 'El correo es requerido',
-            'email.email' => 'El correo electrónico debe ser válido', 
-            'phone.required' => 'El teléfono es requerido',
+            'selectedUser.required' => 'El empleado es requerido',
+            'type.required' => 'El tipo es requerido',
+            'amount.required' => 'La cantidad es requerida',
+            'startDate.required' => 'La fecha de inicio es requerida', 
+            'endDate.required' => 'La fecha de fin es requerida',
+            'description.required' => 'La descripicón es requerida',
         ];
     }
-     */
+    
 
      public function saveGoal()
      {
@@ -61,19 +63,6 @@ class GoalModal extends Component
  
      }
      
-    public function showGoal($goalId)
-    {
-        if ($goalId) {
-      //      $this->userId = User::find($userId)->name;
-            $this->goal = Goal::find($goalId);
-            $this->type = $this->goal->type;
-            $this->amount = $this->goal->amount;
-            $this->startDate = $this->goal->start_date;
-            $this->endDate = $this->goal->end_date;
-            $this->description = $this->goal->description;
-        }
-    }
-
     public function downGoal($goalId) 
     {
         $goal = Goal::findOrFail($goalId);
@@ -96,25 +85,47 @@ class GoalModal extends Component
         }
     }
 
-    public function editGoal($userId)
+    public function editGoal($goalId)
     {
-        
-        if ($userId) {
-            $this->userId = User::find($userId)->name;
-            $this->goal = Goal::find($userId);
-            $this->type = $this->goal->type;
-            $this->amount = $this->goal->amount;
-            $this->startDate = $this->goal->start_date;
-            $this->endDate = $this->goal->end_date;
-            $this->description = $this->goal->description;
+        if ($goalId) {
+          
+            $this->goal = Goal::find($goalId);
+            if ($this->goal) {
+          
+                $user = User::find($this->goal->user_id);
+    
+                if ($user) {
+                    $this->userId = $user->name;
+                } else {
+                    $this->userId = "Unknown User";
+                }
+                
+                $this->type = $this->goal->type;
+                $this->amount = $this->goal->amount;
+                $this->startDate = $this->goal->start_date;
+                $this->endDate = $this->goal->end_date;
+                $this->description = $this->goal->description;
+                $this->statusGoal = $this->goal->status;
+    
+            } else {
+                $this->resetGoalAttributes();
+            }
         } else {
-            $this->amount = "";
-            $this->startDate = "";
-            $this->endDate = "";
-            $this->description = "";
+            $this->resetGoalAttributes();
         }
     }
-
+    
+    private function resetGoalAttributes()
+    {
+        $this->userId = "";
+        $this->type = "";
+        $this->amount = "";
+        $this->startDate = "";
+        $this->endDate = "";
+        $this->description = "";
+        $this->statusGoal ="";
+    }
+    
     public function updateGoal()
     {
         $this->validate([

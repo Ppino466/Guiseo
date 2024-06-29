@@ -98,12 +98,10 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
             
             @if ($statusGoal === 'completed')
-                {{-- Mostrar solo el mensaje de procesamiento si es necesario --}}
                 <div wire:loading wire:target="updateGoal">
                     Procesando...
                 </div>
             @else
-                {{-- Mostrar el botón "Guardar" dependiendo de si estás editando una meta existente o registrando una nueva --}}
                 @if ($userId)
                     <button type="button" class="btn btn-success" wire:click="updateGoal" wire:loading.attr="disabled" wire:target="updateGoal">Guardar</button>
                     <div wire:loading wire:target="updateGoal">

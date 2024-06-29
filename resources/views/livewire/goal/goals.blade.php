@@ -87,7 +87,7 @@
                 mostrarConfirmacion("¿Estás seguro?", "¡No podrás revertir esto!.",
                     () => { 
                         Livewire.emit('deleteGoal', value);
-                        mostrarAlerta("¡Realizado!", "La meta se activo.", "success");
+                        mostrarAlerta("¡Realizado!", "La meta se elimino.", "success");
                     });
             });
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Goal;
 
+use App\Mail\GoalAssigned;
+use App\Mail\GoalStatusChanged;
+use App\Mail\GoalUpdated;
 use App\Models\Goal;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
-
 class GoalModal extends Component
 {
 
@@ -48,7 +51,7 @@ class GoalModal extends Component
              'description' => 'required',
          ]);
  
-         Goal::create ([
+         $goal = Goal::create ([
              'user_id' => $this->selectedUser,
              'type' => $this->type,
              'amount' =>  str_replace($symbols, '', $this->amount),
@@ -57,33 +60,46 @@ class GoalModal extends Component
              'description' => $this->description,
              'status' => 'pending'
          ]);
+
+         $user = User::find($this->selectedUser);
+         if ($user) {
+             Mail::to($user->email)->send(new GoalAssigned($goal));
+         }
+     
  
          $this->emit('goalCreated');
          $this->emit('refreshDatatable');
  
      }
      
-    public function downGoal($goalId) 
-    {
-        $goal = Goal::findOrFail($goalId);
-
-        if($goal){
-            $goal->status = 'pending';
-            $goal->save();
-            $this->emit('refreshDatatable');
-        }
-    }
-
-    public function upGoal($goalId) 
-    {
-        $goal = Goal::findOrFail($goalId);
-
-        if($goal){
-            $goal->status = 'active';
-            $goal->save();
-            $this->emit('refreshDatatable');
-        }
-    }
+     public function downGoal($goalId) 
+     {
+         $goal = Goal::findOrFail($goalId);
+     
+         if ($goal) {
+             $goal->status = 'pending';
+             $goal->save();
+             $this->sendStatusChangedEmail($goal);
+             $this->emit('refreshDatatable');
+         }
+     }
+     
+     public function upGoal($goalId) 
+     {
+         $goal = Goal::findOrFail($goalId);
+     
+         if ($goal) {
+             $goal->status = 'active';
+             $goal->save();
+             $this->sendStatusChangedEmail($goal);
+             $this->emit('refreshDatatable');
+         }
+     }
+     
+     protected function sendStatusChangedEmail(Goal $goal)
+     {
+         Mail::to($goal->user->email)->send(new GoalStatusChanged($goal));
+     }
 
     public function editGoal($goalId)
     {
@@ -129,24 +145,49 @@ class GoalModal extends Component
     public function updateGoal()
     {
         $this->validate([
+            'userId' => 'required',
             'type' => 'required',
             'amount' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
             'description' => 'required',
         ]);
-
-        $symbols = array("$", ",");
-        $this->goal->type = $this->type;
-        $this->goal->amount =  str_replace($symbols, '', $this->amount);
-        $this->goal->start_date = $this->startDate;
-        $this->goal->end_date = $this->endDate;
-        $this->goal->description = $this->description;
-        $this->goal->save();
-
-        $this->emit('goalUpdated');
-        $this->emit('refreshDatatable');
+        $symbols = array("$",",");    
+        if ($this->goal) {
+            $previousData = [
+                'description' => $this->goal->description,
+                'type' => $this->goal->type,
+                'amount' => str_replace($symbols, '', $this->amount),
+                'start_date' => $this->goal->start_date,
+                'end_date' => $this->goal->end_date,
+            ];
+    
+            $this->goal->update([
+                'type' => $this->type,
+                'amount' => str_replace($symbols, '', $this->amount),
+                'start_date' => $this->startDate,
+                'end_date' => $this->endDate,
+                'description' => $this->description,
+                'status' => $this->statusGoal,
+            ]);
+    
+            $user = User::find($this->goal->user_id);
+    
+            if ($user) {
+      
+                $data = [
+                    'previousData' => (object) $previousData, 
+                    'updatedData' => $this->goal,
+                ];
+    
+                Mail::to($user->email)->send(new GoalUpdated($data));
+    
+                $this->emit('goalUpdated');
+                $this->emit('refreshDatatable');
+            }
+        }
     }
+    
 
     public function deleteGoal($goalId) 
     {

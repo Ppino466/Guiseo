@@ -1,5 +1,5 @@
 <div class="row mb-4">
-    <div class="col-lg-6 col-md-6 mb-4">
+    <div class="col-lg-4 col-md-6 mb-4">
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
@@ -19,7 +19,7 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Categoria</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ventas</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Meta</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Articulos Vendidos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,31 +33,19 @@
                                     <td class="align-middle text-center text-sm">
                                         <span class="text-xs font-weight-bold"> $<?= number_format($category->total_sales, 2) ?></span>
                                     </td>
-                                    <td class="align-middle">
-                                        <div class="progress-wrapper w-75 mx-auto">
-                                            <div class="progress-info">
-                                                <div class="progress-percentage">
-                                                    <span class="text-xs font-weight-bold"><?= number_format($category->percentage_achieved, 1) ?>%</span>
-                                                </div>
-                                            </div>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-gradient-info" role="progressbar"
-                                                     style="width: <?= min(100, number_format($category->percentage_achieved, 1)) ?>%"
-                                                     aria-valuenow="<?= min(100, number_format($category->percentage_achieved, 1)) ?>"
-                                                     aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="text-xs font-weight-bold"><?= number_format($category->quantity_sold) ?></span>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-                
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 mb-md-0 mb-4">
+    
+    <div class="col-lg-5 col-md-6 mb-4">
       <div class="card">
           <div class="card-header pb-0">
               <div class="row">
@@ -114,7 +102,7 @@
           </div>
       </div>
   </div>
-    <div class="col-lg-4 col-md-6" >
+    <div class="col-lg-3 col-md-6" >
         <div class="card h-100">
             <div class="card-header pb-0">
                 <div class="row">
@@ -185,4 +173,5 @@
             </div>
         </div>
     </div>
+    
 </div>

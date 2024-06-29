@@ -40,11 +40,13 @@ class Tables extends Component
             ->select(
                 'categories.name as category_name',
                 DB::raw('SUM(sale_details.unit_price * sale_details.quantity) as total_sales'),
-                DB::raw("(SUM(sale_details.unit_price * sale_details.quantity) / 1000 * 100) as percentage_achieved")
+                DB::raw("(SUM(sale_details.unit_price * sale_details.quantity) / 1000 * 100) as percentage_achieved"),
+                DB::raw('SUM(sale_details.quantity) as quantity_sold')
             )
             ->groupBy('categories.name')
             ->get();
     }
+    
 
     public function getSalesByUser()
     {
